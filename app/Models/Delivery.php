@@ -22,7 +22,7 @@ class Delivery extends Model
     }
 
     //one to many
-    public function Preorder(){
+    public function preorder(){
         return $this->hasMany(Preorder::class);
     }
 }
