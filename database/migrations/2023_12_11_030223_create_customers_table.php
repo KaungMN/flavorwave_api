@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('customerType');
-            $table->string('photo');
             $table->timestamps();
         });
     }

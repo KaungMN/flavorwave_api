@@ -15,7 +15,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('warehouse_id');
             $table->unsignedBigInteger('raw_id');
-            $table->unsignedBigInteger('staff_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('supplier_id');
             $table->integer('line');

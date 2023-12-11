@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Delivery extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'truck_id',
+        'preorder_id',
+        'delivery_date',
+        'status'
+    ];
+
+    //one to many
+    public function truck(){
+        return $this->belongsTo(Truck::class);
+    }
+
+    //one to many
+    public function Preorder(){
+        return $this->hasMany(Preorder::class);
+    }
 }
