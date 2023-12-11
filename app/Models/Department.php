@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Department extends Model
 {
@@ -13,4 +14,10 @@ class Department extends Model
         'slug',
         'name',
     ];
+
+    // staff 
+    public function staff()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }
