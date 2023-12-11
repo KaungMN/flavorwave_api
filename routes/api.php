@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +26,6 @@ use Illuminate\Support\Facades\Route;
 
 // products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+
+//admin
+Route::get('/getsellcount/{id}',[AdminController::class,'getProductSellCount']);
