@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('photo');
             $table->text('summary');
+            $table->integer('salary');
             $table->string('entry_date');
             $table->timestamps();
         });
