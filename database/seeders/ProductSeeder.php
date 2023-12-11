@@ -15,25 +15,24 @@ class ProductSeeder extends Seeder
     {
         $products = [
             ['name' => 'Burmese Bliss', 'price' => 2000],
-            ['name' => 'Golden Sunshine Tea','price' => 1500],
-            ['name' => 'Mango Tango Delight','price' => 1800],
+            ['name' => 'Golden Sunshine Tea', 'price' => 1500],
+            ['name' => 'Mango Tango Delight', 'price' => 1800],
             ['name' => 'Rangoon Rosewater Elixir', 'price' => 2000],
-            ['name' => 'Emerald Green Chai','price' => 3000],
-            ['name' => 'Citurs Fusion Fizz','price' => 2300],
+            ['name' => 'Emerald Green Chai', 'price' => 3000],
+            ['name' => 'Citurs Fusion Fizz', 'price' => 2300],
             ['name' => 'Coconut Cream Dream', 'price' => 2000],
-            ['name' => 'Jasmine Srenade Soda','price' => 1500],
-            ['name' => 'Papaya Paradise Punch','price' => 1800],
-            ['name' => 'Lychee Lullaby','price' => 1400]
+            ['name' => 'Jasmine Srenade Soda', 'price' => 1500],
+            ['name' => 'Papaya Paradise Punch', 'price' => 1800],
+            ['name' => 'Lychee Lullaby', 'price' => 1400]
         ];
 
-        foreach($products as $product){
+        foreach ($products as $product) {
             Product::create([
                 'slug' => uniqid(),
-            'name' => $product['name'],
-            'price' => $product['price'],
-            'photo' => 'product.png'
+                'name' => $product['name'],
+                'price' => $product['price'],
+                'photo' => 'product.png'
             ]);
         }
-            
     }
 }
