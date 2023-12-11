@@ -16,6 +16,4 @@ class Admin extends Model
         'current_price',
         'initial_price'
     ];
-
-
 }
