@@ -17,19 +17,17 @@ class Staff extends Model
         'photo',
         'phone',
         'summary',
-        'entry_date'
-
+        'entry_date',
+        'salary',
     ];
 
-    public function department(){
+    public function department()
+    {
         return $this->belongsTo(Department::class);
     }
 
-    public function role(){
+    public function role()
+    {
         return $this->hasOne(Role::class);
     }
-
-   
 }
-
-
