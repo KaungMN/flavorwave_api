@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             ProductSeeder::class,
+            SupplierSeeder::class,
+            DepartmentSeeder::class
         ]);
     }
 }
