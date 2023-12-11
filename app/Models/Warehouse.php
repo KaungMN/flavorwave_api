@@ -17,7 +17,8 @@ class Warehouse extends Model
         'phone'
     ];
 
-    public function sale(){
+    public function sale()
+    {
         return $this->hasMany(Warehouse::class);
     }
 }
