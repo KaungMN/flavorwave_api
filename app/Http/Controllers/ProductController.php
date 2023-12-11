@@ -10,8 +10,8 @@ class ProductController extends Controller
     //
     public function index()
     {
-        $product = Product::all();
-        return $product;
+        $product = Product::paginate(5);
+        // return $product;
         return response()->json($product);
     }
 }
