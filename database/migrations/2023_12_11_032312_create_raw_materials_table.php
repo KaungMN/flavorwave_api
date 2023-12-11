@@ -16,10 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->string('name');
             $table->string('price');
-            $table->string('photo');
+            $table->string('photo')->nullable();;
             $table->float('weight');
             $table->string('demand_date');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 

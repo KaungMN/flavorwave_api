@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('trucks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('staff_id');
-            $table->string('truckNum');
-            $table->string('box_pcs');
+            $table->foreign('staff_id')->references('id')->on('staffs');
+            $table->string('truck_number');
+            $table->string('truck_name');
+            $table->string('capacity');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 

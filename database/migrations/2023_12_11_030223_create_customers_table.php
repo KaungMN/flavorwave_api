@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug');
             $table->string('name');
             $table->string('password');
             $table->string('email');
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('customerType');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 

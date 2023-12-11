@@ -25,8 +25,7 @@ class DepartmentSeeder extends Seeder
 
         foreach ($departments as $d) {
             Department::create([
-                'slug' => uniqid(),
-                'name' => $d['name'],
+                'name' => $d['name']
             ]);
         }
     }
