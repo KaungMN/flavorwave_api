@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('slug');
             $table->unsignedBigInteger('preorder_id');
             $table->unsignedBigInteger('staff_id');
-            $table->string('status');
             $table->timestamps();
         });
     }

@@ -18,17 +18,18 @@ class WarehouseProduct extends Model
         'expire_date'
     ];
 
-    public function warehouse(){
+    public function warehouse()
+    {
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function rawMaterial(){
+    public function rawMaterial()
+    {
         return $this->hasMany(RawMaterial::class);
     }
 
-    public function product(){
+    public function product()
+    {
         return $this->hasMany(Product::class);
     }
-
-    
 }

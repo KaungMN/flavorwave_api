@@ -13,7 +13,7 @@ class Sale extends Model
         'slug',
         'preorder_id',
         'staff_id',
-        'status',
+
     ];
 
     // one to many
