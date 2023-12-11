@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('orderType');
             $table->string('status');
-            $table->longText('remark');
+            $table->longText('remark')->nullable();
             $table->timestamps();
         });
     }

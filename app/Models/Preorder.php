@@ -23,12 +23,14 @@ class Preorder extends Model
     ];
 
     //one to many
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 
     //many to many
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }
