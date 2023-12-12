@@ -16,6 +16,4 @@ class Supplier extends Model
         'phone',
         'address'
     ];
-
-    
 }
