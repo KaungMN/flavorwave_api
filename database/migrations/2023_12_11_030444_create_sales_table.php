@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug');
             $table->unsignedBigInteger('preorder_id');
             $table->unsignedBigInteger('staff_id');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 

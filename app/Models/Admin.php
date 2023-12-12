@@ -11,9 +11,12 @@ class Admin extends Model
 
     protected $fillable = [
         'sold_count',
+        'product_id',
+        'manufactured_product_id',
+        'sold_count',
+        'target_year',
         'produced_count',
         'cancel_count',
-        'current_price',
-        'initial_price'
+
     ];
 }

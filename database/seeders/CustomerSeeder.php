@@ -30,7 +30,6 @@ class CustomerSeeder extends Seeder
 
         foreach ($customers as $customer) {
             Customer::create([
-                'slug' => uniqid(),
                 'name' => $customer['name'],
                 'password' => Hash::make($customer['password']),
                 'email' => $customer['email'],

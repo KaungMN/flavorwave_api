@@ -10,9 +10,12 @@ class ManufacturedProduct extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'raw_id',
+        'raw_material_id',
         'product_id',
-        'total_amount',
+        'product_price',
+        'release_date',
+        'total_quantity',
+        'deleted_at'
     ];
 
 

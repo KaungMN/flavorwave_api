@@ -15,9 +15,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('truck_id');
             $table->unsignedBigInteger('preorder_id');
-            $table->integer('delivery_date');
-            $table->enum('status', ['pending', 'complete', 'cancel']);
+            $table->datetime('delivery_date');
+            $table->string('status')->nullable();
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 
