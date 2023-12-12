@@ -31,4 +31,9 @@ class Staff extends Model
     {
         return $this->hasOne(Role::class);
     }
+
+    public function setPasswordAttribute($value)
+{
+   $this->attributes['password'] = bcrypt($value);
+}
 }

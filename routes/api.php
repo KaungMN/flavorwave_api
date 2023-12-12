@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\CustomerController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +29,11 @@ use Illuminate\Support\Facades\Route;
 
 // products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::post('/delivery', [DeliveryController::class, 'store']);
+
+//admin
+Route::get('/getsellcount/{id}',[AdminController::class,'getProductSellCount']);
+
+
+Route::post('/register',[AuthController::class,'register']);
+
