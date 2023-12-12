@@ -12,10 +12,10 @@ class Warehouse extends Model
 
     protected $fillable = [
         'sales_id',
-        'slug',
         'name',
         'adddress',
-        'phone'
+        'phone',
+        'deleted_at'
     ];
 
     public function sale()

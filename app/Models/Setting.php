@@ -13,6 +13,7 @@ class Setting extends Model
         'target_year',
         'total_budget',
         'report_budget',
+        'deleted_at'
     ];
 
     // one to many

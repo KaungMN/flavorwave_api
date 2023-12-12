@@ -16,6 +16,7 @@ class RawMaterial extends Model
         'photo',
         'weight',
         'demand_date',
+        'deleted_at'
     ];
 
     // one to many

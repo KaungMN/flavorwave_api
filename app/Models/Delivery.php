@@ -17,12 +17,14 @@ class Delivery extends Model
     ];
 
     //one to many
-    public function truck(){
+    public function truck()
+    {
         return $this->belongsTo(Truck::class);
     }
 
     //one to many
-    public function Preorder(){
+    public function Preorder()
+    {
         return $this->hasMany(Preorder::class);
     }
 }

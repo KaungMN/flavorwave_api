@@ -11,9 +11,6 @@ class WarehouseProduct extends Model
 
     protected $fillable = [
         'warehouse_id',
-        'raw_id',
-        'product_id',
-        'supplier_id',
         'line',
         'expire_date'
     ];
