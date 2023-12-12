@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('manufactured_products', function (Blueprint $table) {
+        Schema::create('damage_return_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->unsignedBigInteger('raw_material_id');
-            $table->integer('product_price');
-            $table->integer('total_quantity');
-            $table->date('release_date');
+            $table->integer('quantity');
+            $table->longText('remark');
             $table->timestamps();
-            $table->datetime('deleted_at')->nullable();
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('manufactured_products');
+        Schema::dropIfExists('damage_return_products');
     }
 };

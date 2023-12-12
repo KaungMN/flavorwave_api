@@ -9,7 +9,7 @@ class Staff extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'slug',
+
         'role_id',
         'department_id',
         'name',
@@ -19,6 +19,7 @@ class Staff extends Model
         'summary',
         'entry_date',
         'salary',
+        'deleted_at'
     ];
 
     public function department()

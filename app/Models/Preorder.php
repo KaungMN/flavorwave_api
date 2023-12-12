@@ -13,13 +13,13 @@ class Preorder extends Model
         'customer_id',
         'product_id',
         'box_pcs',
-        'slug',
         'city',
         'township',
         'address',
         'orderType',
         'status',
-        'remark'
+        'remark',
+        'deleted_at'
     ];
 
     //one to many
