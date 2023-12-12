@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ManufacturedProduct;
 use App\Models\Preorder;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class AdminController extends Controller
         $totalCount = 0;
         $products = ManufacturedProduct::where('product_id',$id);
         foreach($products as $p){
-            $totalCount += explode('_',$p->$total_amount)[0];
+            $totalCount += explode('_',$p->total_amount)[0];
         }
 
         return response()->json($totalCount);
