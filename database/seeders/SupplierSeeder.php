@@ -24,13 +24,12 @@ class SupplierSeeder extends Seeder
         ];
 
 
-        foreach ($suppliers as $s) {
+        foreach ($suppliers as $supplier) {
             Supplier::create([
-                'slug' => uniqid(),
-                'name' => $s['name'],
-                'email' => $s['email'],
-                'phone' => $s['phone'],
-                'address' => $s['address'],
+                'name' => $supplier['name'],
+                'email' => $supplier['email'],
+                'phone' => $supplier['phone'],
+                'address' => $supplier['address']
             ]);
         }
     }

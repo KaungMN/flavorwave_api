@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('warehouse_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('warehouse_id');
-            $table->integer('line');
-            $table->string('expire_date');
+            $table->string('line');
+            $table->datetime('expire_date');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 

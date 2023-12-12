@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+        Schema::create('product_profit_summary', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('manufactured_product_id');
             $table->integer('sold_count');
             $table->integer('produced_count');
             $table->integer('cancel_count');
-            $table->float('current_price');
-            $table->float('initial_price');
+            $table->year('target_year');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('product_profit_summary');
     }
 };
