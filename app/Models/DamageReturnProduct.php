@@ -13,6 +13,7 @@ class DamageReturnProduct extends Model
         'product_id',
         'quantity',
         'remark',
+        'stage'
     ];
 
 
