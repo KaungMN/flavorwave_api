@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ManufacturedProduct;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class WarehouseProduct extends Model
 {
@@ -12,7 +13,8 @@ class WarehouseProduct extends Model
     protected $fillable = [
         'warehouse_id',
         'line',
-        'expire_date'
+        'expire_date',
+        'manufactured_product_id',
     ];
 
     public function warehouse()
@@ -28,5 +30,10 @@ class WarehouseProduct extends Model
     public function product()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function manufactproduct()
+    {
+        return $this->hasMany(ManufacturedProduct::class);
     }
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\CustomerAuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +25,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
+// customer_auth
+// register
+Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+
+// login
+Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+
+
 // products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+
+
+// cart
+Route::get('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
