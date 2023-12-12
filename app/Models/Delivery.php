@@ -22,9 +22,10 @@ class Delivery extends Model
         return $this->belongsTo(Truck::class);
     }
 
-    //one to many
-    public function Preorder()
+
+    public function preorder()
     {
+
         return $this->hasMany(Preorder::class);
     }
 }

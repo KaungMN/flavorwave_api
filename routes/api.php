@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\CustomerAuthController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\CustomerController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +37,3 @@ Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('cu
 
 // products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
-
-
-// cart
-Route::get('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');

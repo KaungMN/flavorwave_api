@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('department_id');
-            $table->string('target_year');
-            $table->integer('total_budget');
+            $table->unsignedInteger('department_id')->nullable();
+            $table->string('target_year')->nullable();
+            $table->integer('total_budget')->nullable();
             $table->json('report_budget')->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
