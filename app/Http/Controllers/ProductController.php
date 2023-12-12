@@ -12,6 +12,4 @@ class ProductController extends Controller
         {
                 $product = Product::orderBy('id', 'desc')->get();
 
-                return response()->json($product);
-        }
 }

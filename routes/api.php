@@ -27,13 +27,13 @@ use Illuminate\Support\Facades\Route;
 
 
 
+// customer_auth
+// register
+Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+
+// login
+Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+
+
 // products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
-Route::post('/delivery', [DeliveryController::class, 'store']);
-
-//admin
-Route::get('/getsellcount/{id}',[AdminController::class,'getProductSellCount']);
-
-
-Route::post('/register',[AuthController::class,'register']);
-

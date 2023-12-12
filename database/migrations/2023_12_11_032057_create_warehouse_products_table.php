@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('warehouse_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('warehouse_id');
+            $table->unsignedBigInteger('manufactured_product_id');
             $table->string('line');
             $table->datetime('expire_date');
             $table->timestamps();

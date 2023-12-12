@@ -10,63 +10,59 @@ use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $cleanData = request()->validate([
-            'role_id'=>['required'],
-            'department_id'=>['required'],
-            'name'=>['required'],
-            'email'=>['required',Rule::unique('staffs','email')],
-            'password'=>['required','min:6'],
-            'phone'=>['required'],
-            'salary'=>['required']
+            'role_id' => ['required'],
+            'department_id' => ['required'],
+            'name' => ['required'],
+            'email' => ['required', Rule::unique('staffs', 'email')],
+            'password' => ['required', 'confirmed', 'min:6'],
+            'phone' => ['required'],
+            'salary' => ['required']
         ]);
-        if(request()->file('photo')){
-            $file = $request->file('photo');
-        $file_name = uniqid() . $file->getClientOriginalName();
-        $file->move(public_path('/img/product'), $file_name);
-
-
+        if (request()->file('photo')) {
+            $path = request()->file('photo')->store('/images');
+            $cleanData['photo'] = $path;
         }
-
+        $cleanData['summary'] = $request->summary;
+        $cleanData['entry_date'] = $request->entry_date;
         $staff = Staff::create($cleanData);
-        return $staff;
-        // auth()->login($staff);
-        // $token = $staff->createToken('staffToken')->plainTextToken;
-        // $response = [
-        //     "user"=>$staff,
-        //     "token"=>$token
-        // ];
-        return response()->json($staff);
-
+        auth()->login($staff);
+        $token = $staff->createToken('staffToken')->plainTextToken;
+        $response = [
+            "user" => $staff,
+            "token" => $token
+        ];
+        return response($response, 201);
     }
 
-    public function login(){
+    public function login()
+    {
         $data = request()->validate([
-            'email'=>['required',Rule::exists('staffs','email')],
-            'password'=>['required']
+            'email' => ['required', Rule::exists('staffs', 'email')],
+            'password' => ['required']
         ]);
 
-        $staff = Staff::where('email',$data['email'])->first();
+        $staff = Staff::where('email', $data['email'])->first();
 
-        if($staff || Hash::check($data['password'],$staff->password)){
+        if ($staff || Hash::check($data['password'], $staff->password)) {
             auth()->attempt($data);
             $token = $staff->createToken('staffToken')->plainTextToken;
             $response = [
-                "user"=>$staff,
-                "token"=>$token
+                "user" => $staff,
+                "token" => $token
             ];
-            return response($response,200);
-        }
-        else{
-            return response()->json(['Something went wrong'],400);
+            return response($response, 200);
+        } else {
+            return response()->json(['Something went wrong'], 400);
         }
     }
 
-    public function logout($id){
-        $user = Staff::where('id',$id)->first();
+    public function logout($id)
+    {
+        $user = Staff::where('id', $id)->first();
         $user->tokens()->delete();
-        return response()->json(['message'=>'Logged out successfully'],200);
+        return response()->json(['message' => 'Logged out successfully'], 200);
     }
-
 }
-

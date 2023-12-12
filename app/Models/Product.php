@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
 use App\Models\Preorder;
 use App\Models\Warehouse;
 use App\Models\DamageReturnProduct;
@@ -34,5 +35,12 @@ class Product extends Model
     public function damage()
     {
         return $this->belongsTo(DamageReturnProduct::class);
+    }
+
+
+    // with cart
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 }
