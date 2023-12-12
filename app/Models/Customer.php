@@ -19,8 +19,8 @@ class Customer extends Model
         'township',
         'address',
         'phone',
-        'customerType'
-
+        'customerType',
+        'deleted_at'
     ];
 
     public function setPasswordAttribute($value)

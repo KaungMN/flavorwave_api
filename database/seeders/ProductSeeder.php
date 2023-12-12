@@ -14,23 +14,21 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $products = [
-            ['name' => 'Burmese Bliss', 'price' => 2000],
-            ['name' => 'Golden Sunshine Tea', 'price' => 1500],
-            ['name' => 'Mango Tango Delight', 'price' => 1800],
-            ['name' => 'Rangoon Rosewater Elixir', 'price' => 2000],
-            ['name' => 'Emerald Green Chai', 'price' => 3000],
-            ['name' => 'Citurs Fusion Fizz', 'price' => 2300],
-            ['name' => 'Coconut Cream Dream', 'price' => 2000],
-            ['name' => 'Jasmine Srenade Soda', 'price' => 1500],
-            ['name' => 'Papaya Paradise Punch', 'price' => 1800],
-            ['name' => 'Lychee Lullaby', 'price' => 1400]
+            ['name' => 'Burmese Bliss'],
+            ['name' => 'Golden Sunshine Tea'],
+            ['name' => 'Mango Tango Delight'],
+            ['name' => 'Rangoon Rosewater Elixir'],
+            ['name' => 'Emerald Green Chai'],
+            ['name' => 'Citurs Fusion Fizz'],
+            ['name' => 'Coconut Cream Dream'],
+            ['name' => 'Jasmine Srenade Soda'],
+            ['name' => 'Papaya Paradise Punch'],
+            ['name' => 'Lychee Lullaby']
         ];
 
         foreach ($products as $product) {
             Product::create([
-                'slug' => uniqid(),
                 'name' => $product['name'],
-                'price' => $product['price'],
                 'photo' => 'product.png'
             ]);
         }

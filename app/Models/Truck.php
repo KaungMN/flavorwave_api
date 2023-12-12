@@ -12,10 +12,13 @@ class Truck extends Model
     protected $fillable = [
         'staff_id',
         'truckNum',
-        'box_pcs'
+        'truck_name',
+        'capacity',
+        'deleted_at'
     ];
 
-     public function staff(){
+    public function staff()
+    {
         return $this->belongsTo(Staff::class);
-     }
+    }
 }

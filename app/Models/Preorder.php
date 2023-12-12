@@ -13,22 +13,24 @@ class Preorder extends Model
         'customer_id',
         'product_id',
         'box_pcs',
-        'slug',
         'city',
         'township',
         'address',
         'orderType',
         'status',
-        'remark'
+        'remark',
+        'deleted_at'
     ];
 
     //one to many
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 
     //many to many
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

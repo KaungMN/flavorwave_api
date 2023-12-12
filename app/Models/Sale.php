@@ -10,10 +10,9 @@ class Sale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'slug',
         'preorder_id',
         'staff_id',
-        'status',
+        'deleted_at'
     ];
 
     // one to many

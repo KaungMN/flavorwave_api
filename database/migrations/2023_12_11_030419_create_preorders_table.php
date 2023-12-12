@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('preorders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
             $table->string('box_pcs');
-            $table->string('slug');
             $table->string('city');
             $table->string('township');
             $table->string('address');
             $table->string('orderType');
-            $table->string('status');
-            $table->longText('remark');
+            $table->string('status')->nullable();
+            $table->longText('remark')->nullable();
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 

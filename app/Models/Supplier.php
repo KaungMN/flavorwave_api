@@ -10,10 +10,11 @@ class Supplier extends Model
     use HasFactory;
 
     protected $fillable = [
-        'slug',
+
         'name',
         'email',
         'phone',
-        'address'
+        'address',
+        'deleted_at'
     ];
 }

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('raw_materials', function (Blueprint $table) {
+        Schema::create('manufactured_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('supplier_id');
-            $table->string('name');
-            $table->string('price');
-            $table->string('photo')->nullable();;
-            $table->float('weight');
-            $table->string('demand_date');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('raw_material_id');
+            $table->integer('product_price');
+            $table->integer('total_quantity');
+            $table->date('release_date');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('raw_materials');
+        Schema::dropIfExists('manufactured_products');
     }
 };

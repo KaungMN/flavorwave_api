@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('staffs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug');
             $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
             $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('photo');
-            $table->text('summary');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('photo')->nullable();
+            $table->text('summary')->nullable();
             $table->integer('salary');
             $table->string('entry_date');
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 
