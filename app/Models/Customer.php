@@ -12,7 +12,6 @@ class Customer extends Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'slug',
         'name',
         'password',
         'email',
@@ -33,5 +32,29 @@ class Customer extends Authenticatable
     public function preorder()
     {
         return $this->hasMany(Preorder::class);
+    }
+
+    // search
+    public function scopeFilter($query, $filters)
+    {
+        if ($filters['search'] ?? null) {
+            $query
+                ->where(function ($query) use ($filters) {
+                    $query->where('title', 'LIKE', '%' . $filters['search'] . '%')
+                        ->orWhere('description', 'LIKE', '%' . $filters['search'] . '%');
+                });
+        }
+        if ($filters['category'] ?? null) {
+
+            $query->whereHas('category', function ($query) use ($filters) {
+                $query->where('slug', $filters['category']);
+            });
+        }
+        if ($filters['author'] ?? null) {
+
+            $query->whereHas('author', function ($query) use ($filters) {
+                $query->where('username', $filters['author']);
+            });
+        }
     }
 }

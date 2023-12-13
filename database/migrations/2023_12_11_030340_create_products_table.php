@@ -15,6 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('photo')->nullable();
+            $table->float('price');
+            $table->text('description');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });

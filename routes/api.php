@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\CustomerController;
-use App\Http\Controllers\DeliveryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
+
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\CustomerController;
+use App\Http\Controllers\Auth\CustomerAuthController;
+use App\Http\Controllers\ClientHomeController;
+use App\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +38,10 @@ Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('cu
 
 
 // products
-Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::get('/product', [ClientHomeController::class, 'index'])->name('products');
+Route::get('/orders', [SaleController::class, 'index']);
+
+
+// Route::post('/create-product', [ProductController::class, 'index']);
+
+Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
