@@ -19,7 +19,8 @@ class Preorder extends Model
         'orderType',
         'status',
         'remark',
-        'deleted_at'
+        'deleted_at',
+        'delivery_date'
     ];
 
     //one to many
@@ -32,5 +33,30 @@ class Preorder extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function scopeFilter($query,$filters){
+        if($filters['status'] ?? null){
+
+            $query
+            ->where(function ($query) use ($filters){
+                $query->where('status','LIKE','%'.$filters['status'].'%');
+
+            });
+
+        }
+        if($filters['customer'] ?? null){
+            $query->whereHas('customer',function($query) use ($filters) {
+                $query->where('name',$filters['customer']);
+            });
+        }
+
+        if($filters['product'] ?? null){
+            $query->whereHas('product',function($query) use ($filters) {
+                $query->where('name',$filters['product']);
+            });
+        }
+
+
     }
 }

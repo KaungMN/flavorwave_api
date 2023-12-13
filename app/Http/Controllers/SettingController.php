@@ -16,4 +16,9 @@ class SettingController extends Controller
             return response()->json(['message' => 'Something went wrong'], 400);
         }
     }
+
+    public function store(Request $request){
+        $data = Setting::create($request->all());
+        return response()->json($data);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Cart;
 use App\Models\Preorder;
 use App\Models\Warehouse;
+use App\Models\RawMaterial;
 use App\Models\DamageReturnProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,8 @@ class Product extends Model
     protected $fillable = [
         'name',
         'photo',
+        'price',
+        'description',
     ];
 
 
@@ -43,4 +46,6 @@ class Product extends Model
     {
         return $this->hasMany(Cart::class);
     }
+
+
 }

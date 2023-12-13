@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
+    public function index(){
+        return Staff::filter(request(['role','department','search']))->get();
+    }
+
     public function getStaffs(){
         $staffs = Staff::paginate(15);
         return response()->json($staffs,200);

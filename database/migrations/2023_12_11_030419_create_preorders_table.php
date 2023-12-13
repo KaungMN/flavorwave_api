@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('orderType');
             $table->string('status')->nullable();
+            $table->integer('delivery_date')->nullable();
             $table->longText('remark')->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();

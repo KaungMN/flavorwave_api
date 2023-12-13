@@ -14,10 +14,22 @@ return new class extends Migration
         Schema::create('raw_materials', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('supplier_id');
-            $table->string('name');
-            $table->string('price');
-            $table->string('photo')->nullable();;
-            $table->float('weight');
+            $table->string('name1')->nullable();
+            $table->string('price1')->nullable();
+            $table->string('photo1')->nullable();
+            $table->float('weight1')->nullable();
+            $table->string('name2')->nullable();
+            $table->string('price2')->nullable();
+            $table->string('photo2')->nullable();
+            $table->float('weight2')->nullable();
+            $table->string('name3')->nullable();
+            $table->string('price3')->nullable();
+            $table->string('photo3')->nullable();
+            $table->float('weight3')->nullable();
+            $table->string('name4')->nullable();
+            $table->string('price4')->nullable();
+            $table->string('photo4')->nullable();
+            $table->float('weight4')->nullable();
             $table->string('demand_date');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();

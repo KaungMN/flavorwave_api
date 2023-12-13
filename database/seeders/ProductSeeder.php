@@ -14,16 +14,16 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $products = [
-            ['name' => 'Burmese Bliss'],
-            ['name' => 'Golden Sunshine Tea'],
-            ['name' => 'Mango Tango Delight'],
-            ['name' => 'Rangoon Rosewater Elixir'],
-            ['name' => 'Emerald Green Chai'],
-            ['name' => 'Citurs Fusion Fizz'],
-            ['name' => 'Coconut Cream Dream'],
-            ['name' => 'Jasmine Srenade Soda'],
-            ['name' => 'Papaya Paradise Punch'],
-            ['name' => 'Lychee Lullaby']
+            ['name' => 'Burmese Bliss','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Golden Sunshine Tea','price'=>200.00,'description'=>'This is description'],
+            ['name' => 'Mango Tango Delight','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Rangoon Rosewater Elixir','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Emerald Green Chai','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Citurs Fusion Fizz','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Coconut Cream Dream','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Jasmine Srenade Soda','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Papaya Paradise Punch','price'=>100.00,'description'=>'This is description'],
+            ['name' => 'Lychee Lullaby','price'=>100.00,'description'=>'This is description']
         ];
 
         foreach ($products as $product) {

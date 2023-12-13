@@ -11,10 +11,22 @@ class RawMaterial extends Model
     use HasFactory;
     protected $fillable = [
         'supplier_id',
-        'name',
-        'price',
-        'photo',
-        'weight',
+        'name1',
+        'price1',
+        'photo1',
+        'weight1',
+        'name2',
+        'price2',
+        'photo2',
+        'weight2',
+        'name3',
+        'price3',
+        'photo3',
+        'weight3',
+        'name4',
+        'price4',
+        'photo4',
+        'weight4',
         'demand_date',
         'deleted_at'
     ];
