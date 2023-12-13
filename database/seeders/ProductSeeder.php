@@ -29,7 +29,9 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             Product::create([
                 'name' => $product['name'],
-                'photo' => 'product.png'
+                'photo' => '/product.png',
+                'price' => $product['price'],
+                'description' => $product['description'],
             ]);
         }
     }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('raw_materials', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('supplier_id');
             $table->string('name1')->nullable();
             $table->string('price1')->nullable();

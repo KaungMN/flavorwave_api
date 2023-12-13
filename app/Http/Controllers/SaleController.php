@@ -18,7 +18,7 @@ class SaleController extends Controller
     public function getPreorders()
     {
         $preorders = Preorder::orderBy('id', 'desc')->get();
-
+        return $preorders;
         if (!$preorders) {
             return response()->json([
                 'status' => 404,
@@ -63,5 +63,31 @@ class SaleController extends Controller
             return "Email sent successfully!";
         }
 
+    }
+
+    // change status
+    public function changeStatus(Request $request)
+    {
+        $data = Preorder::where('id', $request->id)->first();
+
+        if (!$data) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'internal_server'
+            ]);
+        }
+
+        $data->update([
+            'status' => $request->status
+        ]);
+
+        // if($data->status == 'confirm'){
+
+        // }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'success'
+        ]);
     }
 }

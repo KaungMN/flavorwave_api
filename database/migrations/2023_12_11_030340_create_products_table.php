@@ -17,6 +17,8 @@ return new class extends Migration
             $table->float('price');
             $table->text('description');
             $table->string('photo')->nullable();
+            $table->float('price');
+            $table->text('description');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });
