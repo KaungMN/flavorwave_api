@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\CustomerController;
 use App\Http\Controllers\Auth\CustomerAuthController;
+use App\Http\Controllers\Auth\StaffAuthController;
 use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\SaleController;
 
@@ -35,13 +36,16 @@ Route::post('/client-register', [CustomerAuthController::class, 'register'])->na
 
 // login
 Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
+// Route::get('/staffs', [StaffAuthController::class, 'index'])->name('staffLogin');
 
 
 // products
-Route::get('/product', [ClientHomeController::class, 'index'])->name('products');
+Route::get('/product', [ClientHomeController::class, 'index']);
 Route::get('/orders', [SaleController::class, 'index']);
 
 
 // Route::post('/create-product', [ProductController::class, 'index']);
 
-Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
+// Route::get('/createorders', [ClientHomeController::class, 'index']);
+Route::post('/createorders', [ClientHomeController::class, 'createOrder']);

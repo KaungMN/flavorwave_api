@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->text('summary')->nullable();
             $table->integer('salary');
+            $table->string('password');
             $table->string('entry_date');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();

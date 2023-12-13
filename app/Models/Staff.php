@@ -9,7 +9,6 @@ class Staff extends Model
 {
     use HasFactory;
     protected $fillable = [
-
         'role_id',
         'department_id',
         'name',
@@ -18,6 +17,7 @@ class Staff extends Model
         'phone',
         'summary',
         'entry_date',
+        'password',
         'salary',
         'deleted_at'
     ];
@@ -33,7 +33,7 @@ class Staff extends Model
     }
 
     public function setPasswordAttribute($value)
-{
-   $this->attributes['password'] = bcrypt($value);
-}
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

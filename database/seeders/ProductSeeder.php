@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
             ['name' => 'Mango Tango Delight', 'price' => 4000.00, 'description' => 'desc'],
             ['name' => 'Rangoon Rosewater Elixir', 'price' => 4000.00, 'description' => 'desc'],
             // ['name' => 'Emerald Green Chai'],
-            // ['name' => 'Citurs Fusion Fizz'],
+            // ['name' => 'Citurss Fusion Fizz'],
             // ['name' => 'Coconut Cream Dream'],
             // ['name' => 'Jasmine Srenade Soda'],
             // ['name' => 'Papaya Paradise Punch'],
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             Product::create([
                 'name' => $product['name'],
-                'photo' => '/product.png',
+                'photo' => 'sample3.png',
                 'price' => $product['price'],
                 'description' => $product['description'],
             ]);
