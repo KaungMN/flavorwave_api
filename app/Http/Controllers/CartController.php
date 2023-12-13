@@ -17,7 +17,6 @@ class CartController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'not_found',
-
             ]);
         }
 
