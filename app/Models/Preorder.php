@@ -12,13 +12,16 @@ class Preorder extends Model
     protected $fillable = [
         'customer_id',
         'product_id',
-        'box_pcs',
+        'quantity',
+        'sub_total',
+        'products',
         'city',
         'township',
         'address',
         'orderType',
         'status',
         'remark',
+        'delivery_date',
         'deleted_at'
     ];
 

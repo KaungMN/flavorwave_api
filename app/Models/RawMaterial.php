@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Product;
 use App\Models\ManufacturedProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,7 @@ class RawMaterial extends Model
     use HasFactory;
     protected $fillable = [
         'supplier_id',
+        'product_id',
         'name',
         'price',
         'photo',
@@ -29,5 +31,10 @@ class RawMaterial extends Model
     public function manufacturedProduct()
     {
         return $this->belongsTo(ManufacturedProduct::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class,);
     }
 }

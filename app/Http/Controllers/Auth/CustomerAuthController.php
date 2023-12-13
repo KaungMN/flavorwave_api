@@ -45,10 +45,10 @@ class CustomerAuthController extends Controller
     // login
     public function login(Request $request)
     {
-        $validateData = $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+        // $validateData = $request->validate([
+        //     'email' => 'required',
+        //     'password' => 'required',
+        // ]);
 
         $checkEmail = Customer::where('email', $request->email)->first();
 
@@ -85,5 +85,9 @@ class CustomerAuthController extends Controller
     public function logout()
     {
         auth()->guard('customer')->logout();
+        return response()->json([
+            'status' => 200,
+            'messaage' => 'success'
+        ]);
     }
 }
