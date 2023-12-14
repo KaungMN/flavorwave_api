@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
+
+
+
     public function index(){
         return Staff::filter(request(['role','department','search']))->get();
     }

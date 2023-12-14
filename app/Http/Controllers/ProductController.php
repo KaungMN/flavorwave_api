@@ -47,4 +47,8 @@ class ProductController extends Controller
                         'message' => 'success'
                 ]);
         }
+
+        public function getProduct($name){
+            return response()->json(Product::where('name',$name)->find());
+        }
 }
