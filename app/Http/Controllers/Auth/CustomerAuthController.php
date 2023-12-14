@@ -66,7 +66,7 @@ class CustomerAuthController extends Controller
         $checkPassword = Hash::check($request->password, $customer->password);
 
         if ($checkPassword) {
-            auth()->login($customer);
+            auth()->guard('customers')->login($customer);
 
             // $authenticatedCustomer = auth()->guard('customers')->user();
 

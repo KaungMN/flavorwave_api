@@ -34,29 +34,23 @@ use App\Http\Controllers\Auth\CustomerAuthController;
 
 Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
 Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
 
 
 // staff_auth
 Route::post('/staff-register', [StaffAuthController::class, 'register'])->name('staffRegister');
 Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
-
+Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogin');
 
 Route::get('/product', [ClientHomeController::class, 'index']);
 
-Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
-
 // customer_auth
 Route::group(['middleware' => 'CustomerAuth'], function () {
-    Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
+    Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
 });
 
 
 Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
-
-
-    Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogin');
-
-
 
     // get staff
     Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');

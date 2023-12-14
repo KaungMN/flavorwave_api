@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\RawMaterial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -14,7 +15,8 @@ class ProductController extends Controller
         {
                 // $raw_materials = RawMaterial::orderBy('id', 'desc')->get();
                 $product = Product::orderBy('id', 'desc')->with('raw')->get();
-
+                $pw = Hash::make('123456');
+                return $pw;
                 return response()->json($product);
         }
 

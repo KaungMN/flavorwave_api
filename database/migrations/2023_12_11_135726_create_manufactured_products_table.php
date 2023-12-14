@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('location');
             $table->date('release_date');
             $table->date('expire_date');
-            $table->integer('product_price');
+
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });

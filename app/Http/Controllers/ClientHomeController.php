@@ -21,6 +21,8 @@ class ClientHomeController extends Controller
     {
         $products = Product::orderBy('id', 'desc')->get();
 
+        // $pw = Hash::make('123456');
+        // return $pw;
         if (!$products) {
             return response()->json([
                 'status' => 404,
@@ -37,14 +39,14 @@ class ClientHomeController extends Controller
     {
         // return 'hi';
         // $customer_id = auth()->guard('customer')->id();
-        $validation = $this->validation($request);
-        if ($validation->fails()) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'not_found'
-            ]);
-        }
-        // $authenticatedCustomer = auth()->user()->id;
+        // $validation = $this->validation($request);
+        // if ($validation->fails()) {
+        //     return response()->json([
+        //         'status' => 404,
+        //         'message' => 'not_found'
+        //     ]);
+        // }
+        // $authenticatedCustomer = auth()->guard('customers')->user()->id;
 
         // if (!$authenticatedCustomer) {
         //     return response()->json([
@@ -53,10 +55,10 @@ class ClientHomeController extends Controller
         //     ], 401);
         // }
 
-
+        // return $request->all();
         Preorder::create([
             'customer_id' => 1,
-            // 'products' => $request->input('products'),
+            'products' => $request->input('products'),
             'quantity' => $request->quantity,
             'city' => $request->city,
             'township' => $request->township,
@@ -64,6 +66,7 @@ class ClientHomeController extends Controller
             'orderType' => $request->orderType,
             'status' => $request->status,
             'remark' => $request->remark,
+            'sub_Total' => $request->sub_total,
         ]);
 
         return response()->json([

@@ -78,8 +78,6 @@ class StaffAuthController extends Controller
 
             Log::info($staffSession);
 
-
-
             return response()->json([
                 'staff' => $staff,
                 'token' => $staff->createToken('staffToken')->plainTextToken,
