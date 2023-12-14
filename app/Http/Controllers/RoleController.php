@@ -10,6 +10,7 @@ class RoleController extends Controller
     //
 
     public function getRole($id){
-        return response()->json(Role::find($id));
+        $role = Role::find($id);
+        return response()->json($role);
     }
 }
