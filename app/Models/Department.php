@@ -11,11 +11,10 @@ class Department extends Model
     use HasFactory;
 
     protected $fillable = [
-        'slug',
         'name',
     ];
 
-    // staff 
+    // staff
     public function staff()
     {
         return $this->hasMany(Staff::class);
