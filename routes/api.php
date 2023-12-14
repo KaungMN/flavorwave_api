@@ -13,8 +13,10 @@ use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\DamageReturnProductController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ManufacturedProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
@@ -93,9 +95,9 @@ Route::get('/check-stock',[ManufacturedProductController::class,'checkStock']);
 
 //admin product
 // Route::get('/get-sell-count',[AdminController::class,'getProductSellCount']);
-Route::get('/get-total-count',[AdminController::class,'getProductTotalCount']);
-Route::get('/get-damage-return-count',[AdminController::class,'getDamageAndReturnCount']);
-Route::get('/get-product-prices-change',[AdminController::class,'getProductPricesChanges']);
+Route::post('/get-total-count',[AdminController::class,'getProductTotalCount']);
+Route::post('/get-damage-return-count',[AdminController::class,'getDamageAndReturnCount']);
+Route::post('/get-product-prices-change',[AdminController::class,'getProductPricesChanges']);
 
 
 //setting
@@ -124,7 +126,7 @@ Route::delete('/delete-preorder/{id}',[OrderController::class,'destroy']);
 //product
 Route::get('/get-products',[ProductController::class,'index']);
 Route::post('/post-products',[ProductController::class,'store']);
-// Route::get('/get-product/{id}',[ProductController::class,'show']);
+Route::get('/get-product/{name}',[ProductController::class,'show']);
 // Route::patch('/update-product/{id}',[ProductController::class,'update']);
 // Route::delete('/delete-product/{id}',[ProductController::class,'destroy']);
 
@@ -156,3 +158,13 @@ Route::post('/store-warehouse',[OrderController::class,'store']);
 Route::get('/show-truck',[OrderController::class,'show']);
 Route::patch('/update-warehouse/{id}',[OrderController::class,'edit']);
 Route::delete('/delete-warehouse/{id}',[OrderController::class,'destroy']);
+
+//role
+Route::get('/get-role/{id}',[RoleController::class,'getRole']);
+
+//department
+Route::get('/get-department/{id}',[DepartmentController::class,'getDepartment']);
+
+
+
+
