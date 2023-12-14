@@ -6,7 +6,6 @@ use App\Models\Cart;
 use App\Models\Preorder;
 use App\Models\Warehouse;
 use App\Models\RawMaterial;
-use App\Models\RawMaterial;
 use App\Models\DamageReturnProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,11 +49,7 @@ class Product extends Model
     }
 
 
-    // with cart
-    public function cart()
-    {
-        return $this->hasMany(Cart::class);
-    }
+
 
     // with raw
     public function raw()

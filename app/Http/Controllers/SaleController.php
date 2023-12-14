@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ConfirmOrderMail;
 use App\Models\Preorder;
 use App\Models\Sale;
+use App\Models\Staff;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -29,7 +30,7 @@ class SaleController extends Controller
         return response()->json($preorders);
     }
 
-    public function storePreorder(Request $request,$preOrderId,$department,$ccEmails){
+    public function storePreorder(Request $request,$preOrderId){
         $newSaleOrder = Sale::create($request->all());
         $selectedSale = Sale::where('id',$newSaleOrder)->get();
         $preorderIds = [];
@@ -48,17 +49,19 @@ class SaleController extends Controller
         }
         }
 
-        $this->confirmOrderAndSendMail($newSaleOrder,$preOrderId,$department,$ccEmails);
+        $this->confirmOrderAndSendMail($newSaleOrder,$preOrderId);
     }
 
-    public function confirmOrderAndSendMail($newSaleOrder,$preOrderId,$department,$ccEmails){
+    public function confirmOrderAndSendMail($newSaleOrder,$preOrderId){
         $sale = Sale::where('preorder_id',$preOrderId)->first();
+        $warehouse_man = Staff::where("role_id",2)->where("department_id",4)->first();
+        $factory_man = Staff::where("role_id",2)->where("department_id",5)->first();
         if($sale->preorder['status'] === "confirmed"){
-            $title = 'Dear '+$department;
-            $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your '+$department+' sheet. Thank you!';
+            $title = 'New Order Arrived!';
+            $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
 
                     //warehouse manager email
-            Mail::to($newSaleOrder->staff->email)->cc($ccEmails)->send(new ConfirmOrderMail($title, $body));
+            Mail::to([$warehouse_man->email,$factory_man->email])->send(new ConfirmOrderMail($title, $body));
 
             return "Email sent successfully!";
         }

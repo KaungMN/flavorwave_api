@@ -16,7 +16,10 @@ class ManufacturedProduct extends Model
         'product_price',
         'release_date',
         'total_quantity',
-        'deleted_at'
+        'deleted_at',
+        'expire_date',
+        'location',
+        'warehouse_id'
     ];
 
     // with raw

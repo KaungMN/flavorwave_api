@@ -33,31 +33,31 @@ class WarehouseController extends Controller
 
 
     // edit
-    public function edit(Request $request, $id)
-    {
-        $warehouse_product = WarehouseProduct::where('id', $id)->first();
+    // public function edit(Request $request, $id)
+    // {
+    //     $warehouse_product = WarehouseProduct::where('id', $id)->first();
 
-        if (!$warehouse_product) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'not_found'
-            ]);
-        }
+    //     if (!$warehouse_product) {
+    //         return response()->json([
+    //             'status' => 404,
+    //             'message' => 'not_found'
+    //         ]);
+    //     }
 
-        return response()->json($warehouse_product);
-    }
+    //     return response()->json($warehouse_product);
+    // }
 
 
 
     // update
     public function update(Request $request, $id)
     {
-        $validateData = $request->validate([
-            'line' => 'required',
-            'warehouse_id' => 'required',
-            'expire_date' => 'required',
-            'manufactured_product_id' => 'required',
-        ]);
+        // $validateData = $request->validate([
+        //     'line' => 'required',
+        //     'warehouse_id' => 'required',
+        //     'expire_date' => 'required',
+        //     'manufactured_product_id' => 'required',
+        // ]);
 
 
         $warehouse_product = WarehouseProduct::find($id);
@@ -69,7 +69,7 @@ class WarehouseController extends Controller
             ]);
         }
 
-        $warehouse_product->update($validateData);
+        $warehouse_product->update($request->all());
     }
 
     // delete

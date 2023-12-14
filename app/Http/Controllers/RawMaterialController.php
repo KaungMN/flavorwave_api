@@ -18,6 +18,17 @@ class RawMaterialController extends Controller
         return response()->json($raws);
     }
 
+    public function showRaw($id){
+        $raw = RawMaterial::where("id",$id)->first();
+        if(!$raw){
+            return response()->json([
+                "message"=>"Not Found"
+            ]);
+        }
+        return response()->json($raw);
+
+    }
+
     public function updateRaw(Request $request,$id){
         $raw = RawMaterial::find($id);
         if($raw){

@@ -30,23 +30,22 @@ class ManufacturedProductController extends Controller
     public function store(Request $request)
     {
 
-        $validateData = $request->validate([
-            'product_id' => 'required',
-            'raw_material_id' => 'required',
-            'product_price' => 'required',
-            'total_quantity' => 'required',
-            'release_date' => 'required',
-        ]);
+        // $validateData = $request->validate([
+        //     'product_id' => 'required',
+        //     'raw_material_id' => 'required',
+        //     'product_price' => 'required',
+        //     'total_quantity' => 'required',
+        //     'release_date' => 'required',
+        // ]);
 
-
-        $manufact_product = ManufacturedProduct::create($validateData);
+        $manufact_product = ManufacturedProduct::create($request->all());
 
         return response()->json($manufact_product);
     }
 
 
     // edit
-    public function edit($id)
+    public function show($id)
     {
         $manufact_product = ManufacturedProduct::where('id', $id)->with('product', 'raw')->first();
 
@@ -65,19 +64,15 @@ class ManufacturedProductController extends Controller
     // update
     public function update(Request $request, $id)
     {
-        $validateData = $request->validate([
-            'product_id' => 'required',
-            'raw_material_id' => 'required',
-            'product_price' => 'required',
-            'total_quantity' => 'required',
-            'release_date' => 'required',
-        ]);
+        // $validateData = $request->validate([
+        //     'product_id' => 'required',
+        //     'raw_material_id' => 'required',
+        //     'product_price' => 'required',
+        //     'total_quantity' => 'required',
+        //     'release_date' => 'required',
+        // ]);
 
         $manufact_product = ManufacturedProduct::find($id);
-
-
-        $manufact_product->update($validateData);
-
 
         if (!$manufact_product) {
             return response()->json([
@@ -87,6 +82,7 @@ class ManufacturedProductController extends Controller
         }
 
 
+        $manufact_product->update($request->all());
         return response()->json($manufact_product);
     }
 
@@ -115,12 +111,12 @@ class ManufacturedProductController extends Controller
                 ->selectRaw('*, sum(total_quantity) as totalQuantity')
                 ->get();
 
-        $preorder = Preorder::where('id',$request->orderId)->first();
+        $preorder = Order::where('id',$request->orderId)->first();
         $preorderQuantity = explode('_',$preorder->box_pcs)[0];
 
 
         if($data['totalQuantity']>$preorderQuantity){
-            Preorder::where('id',$request->orderId)->update(['status','confirmed']);
+            Order::where('id',$request->orderId)->update(['status','confirmed']);
             $validProducts = ManufacturedProduct::where('product_id',$request->productId)
             ->select('total_quantity','release_date')
             ->orderBy('created_at','asc')
@@ -146,7 +142,7 @@ class ManufacturedProductController extends Controller
 
 
     public function checkStock(Request $request){
-        $productTotalCount = ManufacturedProduct::where('product_id',$request->productId)->selectRaw('sum(total_quantity) as totalQuantity')->get();
+        $productTotalCount = ManufacturedProduct::where('product_id',$request->productId)->groupBy('product_id')->selectRaw('sum(total_quantity) as totalQuantity')->get();
 
         if($productTotalCount<500){
             $this->sendToProcureRawsEmail($request->staffEmail);

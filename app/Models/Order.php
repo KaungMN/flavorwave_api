@@ -34,7 +34,7 @@ class Preorder extends Model
     //many to many
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     public function scopeFilter($query,$filters){
@@ -61,4 +61,6 @@ class Preorder extends Model
 
 
     }
+
+
 }

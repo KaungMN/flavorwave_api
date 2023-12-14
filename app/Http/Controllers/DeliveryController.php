@@ -3,40 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Delivery;
-use Carbon\Carbon;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DeliveryController extends Controller
 {
-
     public function index() {
-        $deliveries = Delivery::orderBy('delivery_date','asc')->with('sales', 'truck')->get();
+        $deliveries = Delivery::orderBy('delivery_date','asc')->with('truck')->get();
         return response()->json($deliveries);
     }
 
-    public function store(Request $request) {
-        // $request->validate([
-        //     'truck_id' => 'required',
-        //     'sales_id' => 'required',
-        // ]);
+     public function changeStatus(Request $request)
+    {
+        $data = Delivery::where('id', $request->id)->first();
+        $preorder = Order::where("id",$request->preorder_id)->first();
 
-        $delivery = Delivery::create($request->all());
+        if (!$data) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'internal_server'
+            ]);
+        }
 
+        $preorder->update([
+            "deleted_at"=>Carbon::now()
+        ]);
 
-
-        return response()->json($delivery);
-
-
-    }
-
-    public function orderSuccess(Request $request){
-         Delivery::where('id',$request->id)->update([
-            "status"=>'completed'
+        $data->update([
+            'status' => $request->status
         ]);
 
         return response()->json([
-            "message"=>'Delivery success!'
+            'status' => 200,
+            'message' => 'success'
         ]);
     }
 
+    public function store(Request $request){
+
+        $delivery = Delivery::create($request->all());
+        return response()->json($delivery);
+    }
 }

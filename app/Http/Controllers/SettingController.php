@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    public function getDepartmentsBudgetsPerYear($year)
+    public function getDepartmentsBudgetsPerYear(Request $request)
     {
-        $getBudgets = Setting::select('report_budget')->where('target_year', $year)->get();
+        $getBudgets = Setting::select('report_budget')->where('target_year', $request->year)->get();
         if ($getBudgets) {
             return response()->json($getBudgets);
         } else {

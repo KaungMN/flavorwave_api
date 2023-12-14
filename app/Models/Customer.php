@@ -23,10 +23,7 @@ class Customer extends Authenticatable
         'deleted_at'
     ];
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+
 
 
     public function preorder()
