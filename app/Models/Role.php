@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
 {
@@ -11,4 +12,9 @@ class Role extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function staff()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }

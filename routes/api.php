@@ -1,12 +1,14 @@
 <?php
 
+
+namespace App\Http\Controllers;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController;
-
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\CustomerController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ClientHomeController;
+use App\Http\Controllers\Auth\StaffAuthController;
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\DamageReturnProductController;
@@ -36,22 +38,37 @@ use App\Http\Controllers\TruckController;
 // });
 
 
+// customer_auth
 
+Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
+
+
+// staff_auth
+Route::post('/staff-register', [StaffAuthController::class, 'register'])->name('staffRegister');
+Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
+Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogin');
+
+Route::get('/product', [ClientHomeController::class, 'index']);
 
 // customer_auth
-// register
-Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
-
-// login
-Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+Route::group(['middleware' => 'CustomerAuth'], function () {
+    Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
+});
 
 
-// products
-Route::get('/product', [ClientHomeController::class, 'index'])->name('products');
-Route::get('/orders', [SaleController::class, 'index']);
+Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
+
+    // get staff
+    Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');
 
 
-// Route::post('/create-product', [ProductController::class, 'index']);
+    // products
+    Route::get('/orders', [SaleController::class, 'index']);
+
+
+    // Route::post('/create-product', [ProductController::class, 'index']);
 
 Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
 
