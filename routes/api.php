@@ -1,16 +1,18 @@
 <?php
 
+
+namespace App\Http\Controllers;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController;
-
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\CustomerController;
-use App\Http\Controllers\Auth\CustomerAuthController;
-use App\Http\Controllers\Auth\StaffAuthController;
-use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ClientHomeController;
+use App\Http\Controllers\Auth\StaffAuthController;
+use App\Http\Controllers\Auth\CustomerAuthController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,24 +30,43 @@ use App\Http\Controllers\SaleController;
 // });
 
 
+// customer_auth
 
+Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+
+
+// staff_auth
+Route::post('/staff-register', [StaffAuthController::class, 'register'])->name('staffRegister');
+Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
+
+
+Route::get('/product', [ClientHomeController::class, 'index']);
+
+Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
 
 // customer_auth
-// register
-Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
-
-// login
-Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
-Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
-// Route::get('/staffs', [StaffAuthController::class, 'index'])->name('staffLogin');
+Route::group(['middleware' => 'CustomerAuth'], function () {
+    Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
+});
 
 
-// products
-Route::get('/product', [ClientHomeController::class, 'index']);
-Route::get('/orders', [SaleController::class, 'index']);
+Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
 
 
-// Route::post('/create-product', [ProductController::class, 'index']);
+    Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogin');
 
-// Route::get('/createorders', [ClientHomeController::class, 'index']);
-Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
+
+
+    // get staff
+    Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');
+
+
+    // products
+    Route::get('/orders', [SaleController::class, 'index']);
+
+
+    // Route::post('/create-product', [ProductController::class, 'index']);
+
+    // Route::get('/createorders', [ClientHomeController::class, 'index']);
+});

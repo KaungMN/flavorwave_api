@@ -2,39 +2,44 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class StaffAuthController extends Controller
 {
     //
     public function register(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'phone' => 'required',
-            'department_id' => 'required',
-            'role_id' => 'required',
-            'salary' => 'required',
-            'entry_date' => 'required'
-        ]);
+        // $validateData = $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //     'phone' => 'required',
+        //     'department_id' => 'required',
+        //     'role_id' => 'required',
+        //     'salary' => 'required',
+        //     'entry_date' => 'required'
+        // ]);
 
-        $checkEmail = Staff::where('email', $request->email)->first();
+        $data = $request->all();
 
-        if ($checkEmail) {
+        $staff = Staff::where('email', $request->email)->first();
+
+        if ($staff) {
             return response()->json([
                 'message' => 'email_already_exist'
             ]);
         }
 
-        Staff::create($validateData);
+        Staff::create($data);
 
         return response()->json([
-            'status' => 200,
-            'message' => 'success',
+            'staff' => $staff,
+            'token' => $staff->createToken('staffToken')->plainTextToken,
+            'message' => 'success'
         ]);
     }
 
@@ -45,35 +50,57 @@ class StaffAuthController extends Controller
         //     'password' => 'required',
         // ]);
 
-        $checkEmail = Staff::where('email', $request->email)->first();
+        $staff = Staff::where('email', $request->email)->first();
 
-        if (!$checkEmail) {
+        if (!$staff) {
             return response()->json([
                 'error' => 'email_not_found',
             ]);
         }
 
         // $checkPassword = Hash::check($request->password, $checkEmail->password);
-        $checkPassword = Staff::where('password', $request->password)->first();
+        $checkPassword = Hash::check($request->password, $staff->password);
 
-        if (!$checkPassword) {
+
+        if ($checkPassword) {
+            auth()->guard('staffs')->login($staff);
+            $session_data = [
+                // 'id' => 1,
+                'email' => $staff->email,
+                'name' => $staff->name
+            ];
+
+            session()->put('staff_session', $session_data);
+
+            $staffSession = session()->get('staff_session');
+
+            Log::info('staffSession');
+
+            Log::info($staffSession);
+
+
+
             return response()->json([
-                'error' => 'wrong_password',
+                'staff' => $staff,
+                'token' => $staff->createToken('staffToken')->plainTextToken,
+            ]);
+        } else {
+            return response()->json([
+                'staff' => null,
+                'token' => null,
             ]);
         }
+    }
 
-        auth()->guard('staff')->login($checkEmail);
-        //     $attemptAuth = auth()->guard('customer')->attempt($checkEmail);
 
-        //     if ($attemptAuth) {
+    // logout
+    public function logout()
+    {
+        session()->forget('staff_session');
+
         return response()->json([
             'status' => 200,
-            'message' => 'success',
+            'message' => 'Logout successful'
         ]);
-        //     } else {
-        //         return response()->json([
-        //             'status' => 404,
-        //             'error' => 'not_found'
-        //         ]);
     }
 }

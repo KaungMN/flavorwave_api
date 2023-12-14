@@ -20,12 +20,12 @@ class Product extends Model
         'description',
     ];
 
-    protected $appends = ['image_url'];
+    // protected $appends = ['image_url'];
 
-    public function getImageUrlAttribute()
-    {
-        return asset('/img/product/' . $this->photo);
-    }
+    // public function getImageUrlAttribute()
+    // {
+    //     return asset('/img/product/' . $this->photo);
+    // }
 
     public function preorder()
     {

@@ -12,7 +12,7 @@ class SaleController extends Controller
     //
     public function index()
     {
-        $preorders = Preorder::orderBy('id', 'desc')->get();
+        $preorders = Preorder::orderBy('id', 'desc')->with('customer')->get();
         return $preorders;
         if (!$preorders) {
             return response()->json([
