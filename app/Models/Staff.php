@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Staff extends Model
+class Staff extends Authenticatable
 {
-    use HasFactory;
-    protected $fillable = [
+    use HasFactory, HasApiTokens;
+    protected $table = 'staffs';
 
+    protected $fillable = [
         'role_id',
         'department_id',
         'name',
@@ -18,6 +21,7 @@ class Staff extends Model
         'phone',
         'summary',
         'entry_date',
+        'password',
         'salary',
         'deleted_at'
     ];
@@ -29,34 +33,11 @@ class Staff extends Model
 
     public function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
-    public function scopeFilter($query,$filters){
-        if($filters['search'] ?? null){
-            $query
-            ->where(function ($query) use ($filters){
-                $query->where('name','LIKE','%'.$filters['search'].'%')
-                ->orWhere('salary','LIKE','%'.$filters['search'].'%');
-            });
-
-        }
-        if($filters['role'] ?? null){
-
-                $query->whereHas('role',function($query) use ($filters) {
-                    $query->where('role_name',$filters['role']);
-                });
-
-
-        }
-        if($filters['department'] ?? null){
-
-                $query->whereHas('department',function($query) use ($filters){
-                    $query->where('name',$filters['department']);
-                });
-            }
-        }
-
-
-
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

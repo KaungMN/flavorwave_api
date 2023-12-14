@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Preorder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ClientHomeController extends Controller
 {
-    public function filter(){
-        return Product::filter(request(['name','price']))->get();
-    }
+
+    // public function __construct()
+    // {
+    //     $this->middleware('CustomerAuth');
+    // }
     // home page
     public function index()
     {
-        $products = Product::orderBy('id', 'desc')->with('raw')->get();
-        // $preorders = Preorder::orderBy('id', 'desc')->get();
+        $products = Product::orderBy('id', 'desc')->get();
 
+        // $pw = Hash::make('123456');
+        // return $pw;
         if (!$products) {
             return response()->json([
                 'status' => 404,
@@ -32,6 +37,7 @@ class ClientHomeController extends Controller
     //
     public function createOrder(Request $request)
     {
+        // return 'hi';
         // $customer_id = auth()->guard('customer')->id();
         // $validation = $this->validation($request);
         // if ($validation->fails()) {
@@ -40,8 +46,18 @@ class ClientHomeController extends Controller
         //         'message' => 'not_found'
         //     ]);
         // }
+        // $authenticatedCustomer = auth()->guard('customers')->user()->id;
 
+        // if (!$authenticatedCustomer) {
+        //     return response()->json([
+        //         'status' => 401,
+        //         'message' => 'unauthenticated',
+        //     ], 401);
+        // }
+
+        // return $request->all();
         Preorder::create([
+            'customer_id' => 1,
             'customer_id' => 1,
             'products' => $request->input('products'),
             'quantity' => $request->quantity,
@@ -51,13 +67,13 @@ class ClientHomeController extends Controller
             'orderType' => $request->orderType,
             'status' => $request->status,
             'remark' => $request->remark,
-            'sub_total'=>$request->totalPrice
+            'sub_Total' => $request->sub_total,
         ]);
 
         return response()->json([
 
             'message' => 'success'
-        ],200);
+        ], 200);
     }
 
 

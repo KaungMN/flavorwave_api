@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+
+use App\Models\Staff;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use App\Mail\WelcomeMail;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class CustomerAuthController extends Controller
 {
@@ -27,77 +29,89 @@ class CustomerAuthController extends Controller
             'customerType' => 'required'
         ]);
 
-        $checkEmail = Customer::where('email', $request->email)->first();
+        $data = Customer::where('email', $request->email)->first();
 
-        if ($checkEmail) {
+        if ($data) {
             return response()->json([
                 'message' => 'email_already_exist'
             ]);
         }
 
-        $customer = Customer::create($validateData);
-
-        $this->sendWelcomeEmail($customer['email']);
+        $customer =  Customer::create($validateData);
 
         return response()->json([
-            'status' => 200,
-            'message' => 'success',
+            'customer' => $validateData,
+            'token' => $customer->createToken('customerToken')->plainTextToken,
+            'message' => 'success'
         ]);
-
-
     }
 
 
     // login
     public function login(Request $request)
     {
-        // $validateData = $request->validate([
-        //     'email' => 'required',
-        //     'password' => 'required',
-        // ]);
+        // $data = Customer::where('email', $request->email)->first();
+        $data = request()->validate([
+            'email' => ['required'],
+            'password' => ['required']
+        ]);
+        $customer = Customer::where('email', $request->email)->first();
 
-        $checkEmail = Customer::where('email', $request->email)->first();
-
-        if (!$checkEmail) {
+        if (!$customer) {
             return response()->json([
                 'error' => 'email_not_found',
             ]);
         }
 
-        $checkPassword = Hash::check($request->password, $checkEmail->password);
+        $checkPassword = Hash::check($request->password, $customer->password);
 
-        if (!$checkPassword) {
+        if ($checkPassword) {
+            auth()->guard('customers')->login($customer);
+
+            // $authenticatedCustomer = auth()->guard('customers')->user();
+
+            $session_data = [
+                // 'id' => 1,
+                'email' => $customer->email,
+                'name' => $customer->name,
+
+            ];
+
+            session()->put('customerSession', $session_data);
+
+            $customerSession = session()->get('customerSession');
+
+            Log::info('customerSession');
+
+            Log::info($customerSession);
+
             return response()->json([
-                'error' => 'wrong_password',
+                'customer' => $customer,
+                'token' => $customer->createToken('customerToken')->plainTextToken,
+                // 'id' => $authenticatedCustomer->id,
+            ]);
+        } else {
+            return response()->json([
+                'customer' => null,
+                'token' => null,
             ]);
         }
 
-        auth()->guard('customer')->login($checkEmail);
-        //     $attemptAuth = auth()->guard('customer')->attempt($checkEmail);
-
-        //     if ($attemptAuth) {
-        return response()->json([
-            'status' => 200,
-            'message' => 'success',
-        ]);
-
-
-        //     } else {
-        //         return response()->json([
-        //             'status' => 404,
-        //             'error' => 'not_found'
-        //         ]);
-
+        // auth()->guard('customer')->login($checkEmail);
 
     }
 
     // logout
     public function logout()
     {
-        auth()->guard('customer')->logout();
+        // $customer = Customer::where('id',)->first();
+
+
+        session()->forget('admin_session');
+
         return response()->json([
             'status' => 200,
-            'messaage' => 'success'
+            'message' => 'Logout successful'
         ]);
     }
 

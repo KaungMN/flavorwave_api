@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('orderType');
             $table->string('status')->nullable();
             $table->longText('remark')->nullable();
-            $table->float('sub_total');
+            $table->float('sub_total')->nullable();
             $table->integer('delivery_date')->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
