@@ -18,6 +18,8 @@ class Product extends Model
         'photo',
         'price',
         'description',
+        'price',
+        'description',
     ];
 
     protected $appends = ['image_url'];
@@ -47,11 +49,7 @@ class Product extends Model
     }
 
 
-    // with cart
-    public function cart()
-    {
-        return $this->hasMany(Cart::class);
-    }
+
 
     // with raw
     public function raw()

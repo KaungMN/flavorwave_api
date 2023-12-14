@@ -32,8 +32,31 @@ class Staff extends Model
         return $this->hasOne(Role::class);
     }
 
-    public function setPasswordAttribute($value)
-{
-   $this->attributes['password'] = bcrypt($value);
-}
+    public function scopeFilter($query,$filters){
+        if($filters['search'] ?? null){
+            $query
+            ->where(function ($query) use ($filters){
+                $query->where('name','LIKE','%'.$filters['search'].'%')
+                ->orWhere('salary','LIKE','%'.$filters['search'].'%');
+            });
+
+        }
+        if($filters['role'] ?? null){
+
+                $query->whereHas('role',function($query) use ($filters) {
+                    $query->where('role_name',$filters['role']);
+                });
+
+
+        }
+        if($filters['department'] ?? null){
+
+                $query->whereHas('department',function($query) use ($filters){
+                    $query->where('name',$filters['department']);
+                });
+            }
+        }
+
+
+
 }

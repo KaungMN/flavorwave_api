@@ -7,6 +7,8 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerAuthController extends Controller
 {
@@ -33,12 +35,16 @@ class CustomerAuthController extends Controller
             ]);
         }
 
-        Customer::create($validateData);
+        $customer = Customer::create($validateData);
+
+        $this->sendWelcomeEmail($customer['email']);
 
         return response()->json([
             'status' => 200,
             'message' => 'success',
         ]);
+
+
     }
 
 
@@ -74,11 +80,15 @@ class CustomerAuthController extends Controller
             'status' => 200,
             'message' => 'success',
         ]);
+
+
         //     } else {
         //         return response()->json([
         //             'status' => 404,
         //             'error' => 'not_found'
         //         ]);
+
+
     }
 
     // logout
@@ -89,5 +99,16 @@ class CustomerAuthController extends Controller
             'status' => 200,
             'messaage' => 'success'
         ]);
+    }
+
+    private function sendWelcomeEmail($email)
+    {
+        $title = 'Welcome to the flavor wave energy drink company!';
+        $body = 'Thank you for join and choosed our company!Our company will serve your desire product with healthy, fair price and good packaging style.  ';
+
+
+        Mail::to($email)->send(new WelcomeMail($title, $body));
+
+        return "Email sent successfully!";
     }
 }

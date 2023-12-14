@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class DamageReturnProductController extends Controller
 {
+    public function index(){
+        return DamageReturnProduct::filter(request(['name','price']))->get();
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

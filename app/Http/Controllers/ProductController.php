@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function filter(){
+        return Product::filter(request(['name','price']))->get();
+    }
+
+
 
         public function index()
         {
