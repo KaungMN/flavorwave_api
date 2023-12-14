@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('warehouse_id');
             $table->integer('total_quantity');
             $table->string('location');
+            $table->string('location');
             $table->date('release_date');
             $table->date('expire_date');
 

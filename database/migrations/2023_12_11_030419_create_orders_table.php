@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->json('products');
+            $table->json('products')->nullable();
             // $table->unsignedBigInteger('product_id');
             // $table->foreign('product_id')->references('id')->on('products');
             $table->string('quantity');

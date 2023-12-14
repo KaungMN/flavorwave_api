@@ -34,7 +34,7 @@ class ClientHomeController extends Controller
     }
 
 
-    // 
+    //
     public function createOrder(Request $request)
     {
         // return 'hi';
@@ -58,6 +58,7 @@ class ClientHomeController extends Controller
         // return $request->all();
         Preorder::create([
             'customer_id' => 1,
+            'customer_id' => 1,
             'products' => $request->input('products'),
             'quantity' => $request->quantity,
             'city' => $request->city,
@@ -70,9 +71,9 @@ class ClientHomeController extends Controller
         ]);
 
         return response()->json([
-            'status' => 200,
+
             'message' => 'success'
-        ]);
+        ], 200);
     }
 
 

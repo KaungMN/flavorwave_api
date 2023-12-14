@@ -25,6 +25,7 @@ class StaffController extends Controller
             "phone" => $request['phone']
         ]);
 
+       if(request()->file('photo')){
         $path = request()->file('photo')->store('/images');
         $cleanData['photo'] = $path;
         $cleanData['summary'] = $request['summary'];
@@ -37,6 +38,16 @@ class StaffController extends Controller
     {
         $updatedStaff = $staff->update($request->all());
         return response()->json($updatedStaff, 200);
+    }
+
+    public function showStaff($id){
+        $staff = Staff::where("id",$id)->first();
+        if(!$staff){
+            return response()->json([
+                "message"=>"Not Found"
+            ]);
+        }
+        return response()->json($staff);
     }
 
     public function deleteStaff(Staff $staff)

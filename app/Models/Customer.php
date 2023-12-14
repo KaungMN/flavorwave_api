@@ -24,10 +24,7 @@ class Customer extends Authenticatable
         'deleted_at'
     ];
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+
 
 
     public function preorder()
@@ -35,26 +32,18 @@ class Customer extends Authenticatable
         return $this->hasMany(Preorder::class);
     }
 
-    // search
-    public function scopeFilter($query, $filters)
-    {
-        if ($filters['search'] ?? null) {
+    public function scopeFilter($query,$filters){
+        if($filters['name'] ?? null){
             $query
-                ->where(function ($query) use ($filters) {
-                    $query->where('title', 'LIKE', '%' . $filters['search'] . '%')
-                        ->orWhere('description', 'LIKE', '%' . $filters['search'] . '%');
-                });
-        }
-        if ($filters['category'] ?? null) {
-
-            $query->whereHas('category', function ($query) use ($filters) {
-                $query->where('slug', $filters['category']);
+            ->where(function ($query) use ($filters){
+                $query->where('name','LIKE','%'.$filters['name'].'%');
             });
-        }
-        if ($filters['author'] ?? null) {
 
-            $query->whereHas('author', function ($query) use ($filters) {
-                $query->where('username', $filters['author']);
+        }
+        if($filters['price'] ?? null){
+            $query
+            ->where(function ($query) use ($filters){
+                $query->where('price','LIKE','%'.$filters['price'].'%');
             });
         }
     }

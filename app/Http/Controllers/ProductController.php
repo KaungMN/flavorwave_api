@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    public function filter(){
+        return Product::filter(request(['name','price']))->get();
+    }
+
+
 
         public function index()
         {

@@ -114,4 +114,15 @@ class CustomerAuthController extends Controller
             'message' => 'Logout successful'
         ]);
     }
+
+    private function sendWelcomeEmail($email)
+    {
+        $title = 'Welcome to the flavor wave energy drink company!';
+        $body = 'Thank you for join and choosed our company!Our company will serve your desire product with healthy, fair price and good packaging style.  ';
+
+
+        Mail::to($email)->send(new WelcomeMail($title, $body));
+
+        return "Email sent successfully!";
+    }
 }
