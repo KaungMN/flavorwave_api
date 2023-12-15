@@ -12,21 +12,36 @@ class StaffController extends Controller
 {
     public function getStaffs()
     {
-        $staffs = Staff::orderBy('id', 'desc')->with('role')->get();
+        // $staffs = Staff::orderBy('id', 'desc')->with('role')->get();
+        $staffs = Staff::get();
+        return response()->json($staffs, 200);
+    public function getStaffs()
+    {
+        $staffs = Staff::get();
 
         return response()->json($staffs, 200);
     }
 
     public function storeStaffs(Request $request)
     {
-        $cleanData = $request->validate([
-            "role_id" => $request['role_id'],
-            "department_id" => $request['department_id'],
-            "name" => $request['name'],
-            "email" => $request['email'],
-            "salary" => $request['salary'],
-            "phone" => $request['phone']
-        ]);
+        // $cleanData = $request->validate([
+        //     "role_id" => $request['role_id'],
+        //     "department_id" => $request['department_id'],
+        //     "name" => $request['name'],
+        //     "email" => $request['email'],
+        //     "salary" => $request['salary'],
+        //     "phone" => $request['phone']
+        // ]);
+    public function storeStaffs(Request $request)
+    {
+        // $cleanData = $request->validate([
+        //     "role_id" => $request['role_id'],
+        //     "department_id" => $request['department_id'],
+        //     "name" => $request['name'],
+        //     "email" => $request['email'],
+        //     "salary" => $request['salary'],
+        //     "phone" => $request['phone']
+        // ]);
 
         if (request()->file('photo')) {
             $path = request()->file('photo')->store('/images');
@@ -40,8 +55,11 @@ class StaffController extends Controller
         return response()->json($cleanData, 201);
     }
 
-    public function updateStaff(Request $request, Staff $staff)
+
+    public function updateStaff(Request $request, $id)
     {
+
+        $staff = Staff::find($id);
         $updatedStaff = $staff->update($request->all());
         return response()->json($updatedStaff, 200);
     }
@@ -62,4 +80,4 @@ class StaffController extends Controller
         $staff->delete();
         return response()->json(null, 204);
     }
-}
+    }

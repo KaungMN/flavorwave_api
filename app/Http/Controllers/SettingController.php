@@ -9,7 +9,7 @@ class SettingController extends Controller
 {
     public function getDepartmentsBudgetsPerYear(Request $request)
     {
-        $getBudgets = Setting::select('report_budget')->where('target_year', $request->year)->get();
+        $getBudgets = Setting::get();
         if ($getBudgets) {
             return response()->json($getBudgets);
         } else {

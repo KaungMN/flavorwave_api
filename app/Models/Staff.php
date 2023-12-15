@@ -9,9 +9,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Staff extends Authenticatable
 {
-    use HasFactory, HasApiTokens;
-    protected $table = 'staffs';
-
+    use HasFactory;
+    protected $table = "staffs";
     protected $fillable = [
         'role_id',
         'department_id',

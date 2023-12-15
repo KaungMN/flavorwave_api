@@ -9,9 +9,19 @@ class Order extends Model
 {
     use HasFactory;
 
+
+    // 'customer_id' => $request->customer_id,
+    //         'products' => $request->input('products'),
+    //         'quantity' => $request->quantity,
+    //         'city' => $request->city,
+    //         'township' => $request->township,
+    //         'address' => $request->address,
+    //         'orderType' => $request->orderType,
+    //         'status' => $request->status,
+    //         'remark' => $request->remark,
+
     protected $fillable = [
         'customer_id',
-        'product_id',
         'quantity',
         'sub_total',
         'products',
@@ -21,8 +31,8 @@ class Order extends Model
         'orderType',
         'status',
         'remark',
-        'deleted_at',
-        'delivery_date'
+        'delivery_date',
+        'deleted_at'
     ];
 
     //one to many

@@ -13,10 +13,10 @@ class OrderController extends Controller
         return Order::filter(request(['status', 'customer', 'product']))->get();
     }
 
-    public function getPreorders()
+    public function getOrders()
     {
-        $preorders = Order::orderBy('id', 'desc')->get();
-        return response()->json($preorders);
+        $orders = Order::orderBy('id', 'desc')->get();
+        return response()->json($orders);
     }
 
     // Create a new preorder
@@ -36,14 +36,14 @@ class OrderController extends Controller
         // ]);
 
         $preorder = Order::create($request->all());
-        return response()->json($preorder, 201);
+        return response()->json($order, 201);
     }
 
 
     public function show($id)
     {
-        $preorder = Order::findOrFail($id);
-        return response()->json($preorder);
+        $order = Order::findOrFail($id);
+        return response()->json($order);
     }
 
 
@@ -61,16 +61,16 @@ class OrderController extends Controller
         //     'subtotal'=>
         // ]);
 
-        $preorder = Order::findOrFail($id);
-        $preorder->update($request->all());
+        $order = Order::findOrFail($id);
+        $order->update($request->all());
 
-        return response()->json($preorder, 200);
+        return response()->json($order, 200);
     }
 
     public function destroy($id)
     {
-        $preorder = Order::findOrFail($id);
-        $preorder->delete();
+        $order = Order::findOrFail($id);
+        $order->delete();
 
         return response()->json('Preorder deleted successfully', 200);
     }
