@@ -14,6 +14,11 @@ class ProductController extends Controller
         return Product::filter(request(['name','price']))->get();
     }
 
+    public function getProduct($id){
+        $p = Product::find($id);
+        return response()->json($p);
+    }
+
 
 
         public function index()
@@ -44,7 +49,7 @@ class ProductController extends Controller
                 $image->storeAs('public/images/product', $image_name);
 
                 Product::create([
-                        'name' => $request->product,
+                        'name' => $request->name,
                         'price' => $request->price,
                         'photo' => $image_name,
                         'description' => $request->description

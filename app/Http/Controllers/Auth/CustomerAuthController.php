@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerAuthController extends Controller
 {
@@ -38,6 +40,7 @@ class CustomerAuthController extends Controller
         }
 
         $customer =  Customer::create($validateData);
+        $this->sendWelcomeEmail($customer->email);
 
         return response()->json([
             'customer' => $validateData,

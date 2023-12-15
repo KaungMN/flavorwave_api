@@ -41,14 +41,14 @@ class TruckController extends Controller
     public function update(Request $request, $id)
     {
         $truck = Truck::findOrFail($id);
-        $validatedData = $request->validate([
-            'track_number' => 'required',
-            'track_name' => 'required',
-            'capacity' => 'required',
-            'staff_id' => 'required',
+        // $validatedData = $request->validate([
+        //     'track_number' => 'required',
+        //     'track_name' => 'required',
+        //     'capacity' => 'required',
+        //     'staff_id' => 'required',
 
-        ]);
-        $truck->update($validatedData);
+        // ]);
+        $truck->update($request->all());
 
         return response()->json($truck, 200);
 

@@ -10,14 +10,12 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\Auth\StaffAuthController;
 use App\Http\Controllers\Auth\CustomerAuthController;
-use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\DamageReturnProductController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ManufacturedProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TruckController;
@@ -67,7 +65,7 @@ Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
     // products
     Route::get('/orders', [SaleController::class, 'index']);
 
-
+});
     // Route::post('/create-product', [ProductController::class, 'index']);
 
 Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
@@ -82,7 +80,7 @@ Route::post('/change-status',[SaleController::class,'changeStatus']);
 
 //factory
 Route::get('/get-products',[ManufacturedProductController::class,'index']);
-Route::get('/post-products',[ManufacturedProductController::class,'store']);
+Route::post('/post-product',[ManufacturedProductController::class,'store']);
 Route::patch('/edit-product/{id}',[ManufacturedProductController::class,'edit']);
 Route::get('/get-products/{id}',[ManufacturedProductController::class,'show']);
 Route::delete('/delete-product/{id}',[ManufacturedProductController::class,'destroy']);
@@ -95,9 +93,12 @@ Route::get('/check-stock',[ManufacturedProductController::class,'checkStock']);
 
 //admin product
 // Route::get('/get-sell-count',[AdminController::class,'getProductSellCount']);
-Route::post('/get-total-count',[AdminController::class,'getProductTotalCount']);
+Route::post('/get-total-count/{product_id}/{targetYear}',[AdminController::class,'getProductTotalCount']);
 Route::post('/get-damage-return-count',[AdminController::class,'getDamageAndReturnCount']);
-Route::post('/get-product-prices-change',[AdminController::class,'getProductPricesChanges']);
+Route::post('/get-product-prices-change/{product_id}',[AdminController::class,'getProductPricesChanges']);
+
+//get product
+Route::post('/get-product',[ProductController::class,'getProduct']);
 
 
 //setting
@@ -142,7 +143,7 @@ Route::delete('/delete-preorder/{id}',[OrderController::class,'destroy']);
 Route::get('/get-staffs',[StaffController::class,'getStaffs']);
 Route::post('/store-staffs',[StaffController::class,'storeStaffs']);
 Route::get('/show-staff',[StaffController::class,'showStaff']);
-Route::patch('/update-staff/{id}',[StaffController::class,'updateStaff']);
+Route::put('/update-staff/{id}',[StaffController::class,'updateStaff']);
 Route::delete('/delete-staff/{id}',[StaffController::class,'deleteStaff']);
 
 //truck

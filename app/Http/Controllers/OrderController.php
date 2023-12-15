@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function index(){
-        return OrderS::filter(request(['status','customer','product']))->get();
+        return Order::filter(request(['status','customer','product']))->get();
     }
 
     public function getPreorders()
