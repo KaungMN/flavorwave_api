@@ -19,6 +19,7 @@ use App\Http\Controllers\ManufacturedProductController;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Auth\StaffAuthController;
 
 
 /*
@@ -37,14 +38,34 @@ use App\Http\Controllers\SettingController;
 // });
 
 
+// customer_auth
+Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+// staff_auth
+Route::post('/staff-register', [StaffAuthController::class, 'register'])->name('staffRegister');
+Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
+Route::get('/product', [ClientHomeController::class, 'index']);
+// customer_auth
+Route::group(['middleware' => 'CustomerAuth'], function () {
+    Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
+    Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
+});
+// staff middleware
+Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
+    Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogout');
+    Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');
+    Route::get('/get-preorders', [SaleController::class, 'getPreorders']);
+    // get staff
+});
+
 
 
 // customer_auth
 // register
-Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+// Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
 
 // login
-Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+// Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
 Route::get('/get-customers',[CustomerController::class,'getCus']);
 Route::get('/get-customer/{id}',[CustomerController::class,'showCus']);
 
