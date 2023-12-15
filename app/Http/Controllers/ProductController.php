@@ -26,7 +26,6 @@ class ProductController extends Controller
                 // $raw_materials = RawMaterial::orderBy('id', 'desc')->get();
                 $product = Product::orderBy('id', 'desc')->with('raw')->get();
                 $pw = Hash::make('123456');
-                return $pw;
                 return response()->json($product);
         }
 
@@ -37,11 +36,11 @@ class ProductController extends Controller
 
                 $validator = $this->validation($request);
 
-                if ($validator->fails()) {
-                        return response()->json([
-                                'message' => 'required'
-                        ]);
-                }
+                // if ($validator->fails()) {
+                //         return response()->json([
+                //                 'message' => 'required'
+                //         ]);
+                // }
 
                 // image upload
             if($request->file('photo')) {
