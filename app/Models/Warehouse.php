@@ -11,7 +11,6 @@ class Warehouse extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sales_id',
         'name',
         'address',
         'phone',
@@ -23,8 +22,4 @@ class Warehouse extends Model
         return $this->hasMany(Warehouse::class);
     }
 
-    public function warehouseproduct()
-    {
-        return $this->hasMany(WarehouseProduct::class);
-    }
 }

@@ -162,7 +162,7 @@ Route::delete('/delete-truck/{id}', [TruckController::class, 'destroy']);
 
 //warehouse
 Route::get('/get-warehouses',[WarehouseController::class,'index']);
-Route::post('/store-warehouse',[PreorderController::class,'store']);
+Route::post('/store-warehouse',[WarehouseController::class,'store']);
 Route::get('/show-truck',[PreorderController::class,'show']);
 Route::patch('/update-warehouse/{id}',[PreorderController::class,'edit']);
 Route::delete('/delete-warehouse/{id}',[PreorderController::class,'destroy']);

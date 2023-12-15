@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WarehouseProduct;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
@@ -10,8 +10,8 @@ class WarehouseController extends Controller
     //
     public function index()
     {
-        $products = WarehouseProduct::orderBy('id', 'desc')->with('warehouse')->get();
-        return response()->json($products);
+        $warehouse = Warehouse::orderBy('id', 'desc')->get();
+        return response()->json($warehouse);
     }
 
 
@@ -19,16 +19,16 @@ class WarehouseController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'line' => 'required',
-            'warehouse_id' => 'required',
-            'expire_date' => 'required',
-            'manufactured_product_id' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            // 'manufactured_product_id' => 'required',
         ]);
 
 
-        $product = WarehouseProduct::create($validateData);
+        $warehouse = Warehouse::create($validateData);
 
-        return response()->json($product);
+        return response()->json($warehouse);
     }
 
 
@@ -60,29 +60,29 @@ class WarehouseController extends Controller
         // ]);
 
 
-        $warehouse_product = WarehouseProduct::find($id);
+        $warehouse = Warehouse::find($id);
 
-        if (!$warehouse_product) {
+        if (!$warehouse) {
             return response()->json([
                 'status' => 404,
                 'message' => 'not_found',
             ]);
         }
 
-        $warehouse_product->update($request->all());
+        $warehouse->update($request->all());
     }
 
     // delete
     public function destroy($id)
     {
-        $warehouse_product = WarehouseProduct::find($id);
-        if (!$warehouse_product) {
+        $warehouse = Warehouse::find($id);
+        if (!$warehouse) {
             return response()->json([
                 'status' => 404,
                 'message' => 'not_found',
             ]);
         }
-        $warehouse_product->delete();
+        $warehouse->delete();
 
         return response()->json([
             'message' => 'deleted',

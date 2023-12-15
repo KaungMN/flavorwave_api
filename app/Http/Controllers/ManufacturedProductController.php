@@ -13,7 +13,7 @@ class ManufacturedProductController extends Controller
 {
     public function index()
     {
-        $manufact_products = ManufacturedProduct::orderBy('id', 'desc')->get();
+        $manufact_products = ManufacturedProduct::select('manufactured_products.*', 'warehouses.name as warehouse_name', 'products.name as product_name')->leftjoin('warehouses', 'warehouses.id', '=', 'manufactured_products.warehouse_id')->leftjoin('products', 'products.id', '=', 'manufactured_products.product_id')->orderBy('manufactured_products.id', 'desc')->get();
 
         if (!$manufact_products) {
             return response()->json([
