@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Customer;
-
-use App\Models\Order;
-use App\Models\Sale;
+use App\Models\Preorder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -38,10 +36,10 @@ class ClientHomeController extends Controller
 
 
     //
-    //
     public function createOrder(Request $request)
     {
-        $customer_id = auth()->guard('customer')->id();
+        // return 'hi';
+        // $customer_id = auth()->guard('customer')->id();
         // $validation = $this->validation($request);
         // if ($validation->fails()) {
         //     return response()->json([
@@ -49,9 +47,19 @@ class ClientHomeController extends Controller
         //         'message' => 'not_found'
         //     ]);
         // }
+        // $authenticatedCustomer = auth()->guard('customers')->user()->id;
 
-        $preorder = Order::create([
-            'customer_id' => $request->customer_id,
+        // if (!$authenticatedCustomer) {
+        //     return response()->json([
+        //         'status' => 401,
+        //         'message' => 'unauthenticated',
+        //     ], 401);
+        // }
+
+        // return $request->all();
+        Order::create([
+            'customer_id' => 1,
+            'customer_id' => 1,
             'products' => $request->input('products'),
             'quantity' => $request->quantity,
             'city' => $request->city,
@@ -60,9 +68,8 @@ class ClientHomeController extends Controller
             'orderType' => $request->orderType,
             'status' => $request->status,
             'remark' => $request->remark,
-            'sub_total' => $request->totalPrice
+            'sub_Total' => $request->sub_total,
         ]);
-
 
         return response()->json([
 
