@@ -27,9 +27,9 @@ class CheckStaffAuthentication
 
             return $next($request);
         }
-        // return response()->json([
-        //     'error' => 'Unauthenticated',
-        // ]);
+        return response()->json([
+            'error' => 'Unauthenticated',
+        ]);
     }
     // if (auth()->guard('staffs')->check()) {
     //     return $next($request);
