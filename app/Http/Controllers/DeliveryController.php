@@ -6,6 +6,8 @@ use App\Models\Delivery;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Exports\OrderInformationExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DeliveryController extends Controller
 {
@@ -45,4 +47,10 @@ class DeliveryController extends Controller
         $delivery = Delivery::create($request->all());
         return response()->json($delivery);
     }
+
+    public function export()
+    {
+        return Excel::download(new OrderInformationExport, 'delivery_pending_list_with_delivery_date.xlsx');
+    }
+
 }
