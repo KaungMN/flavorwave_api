@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Preorder extends Model
+class Order extends Model
 {
     use HasFactory;
 
@@ -37,30 +37,25 @@ class Preorder extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function scopeFilter($query,$filters){
-        if($filters['status'] ?? null){
+    public function scopeFilter($query, $filters)
+    {
+        if ($filters['status'] ?? null) {
 
             $query
-            ->where(function ($query) use ($filters){
-                $query->where('status','LIKE','%'.$filters['status'].'%');
-
-            });
-
+                ->where(function ($query) use ($filters) {
+                    $query->where('status', 'LIKE', '%' . $filters['status'] . '%');
+                });
         }
-        if($filters['customer'] ?? null){
-            $query->whereHas('customer',function($query) use ($filters) {
-                $query->where('name',$filters['customer']);
+        if ($filters['customer'] ?? null) {
+            $query->whereHas('customer', function ($query) use ($filters) {
+                $query->where('name', $filters['customer']);
             });
         }
 
-        if($filters['product'] ?? null){
-            $query->whereHas('product',function($query) use ($filters) {
-                $query->where('name',$filters['product']);
+        if ($filters['product'] ?? null) {
+            $query->whereHas('product', function ($query) use ($filters) {
+                $query->where('name', $filters['product']);
             });
         }
-
-
     }
-
-
 }

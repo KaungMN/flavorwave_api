@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Staff;
 use App\Models\Customer;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerAuthController extends Controller
 {
@@ -29,6 +31,9 @@ class CustomerAuthController extends Controller
             'customerType' => 'required'
         ]);
 
+
+
+
         $data = Customer::where('email', $request->email)->first();
 
         if ($data) {
@@ -37,13 +42,32 @@ class CustomerAuthController extends Controller
             ]);
         }
 
-        $customer =  Customer::create($validateData);
-
-        return response()->json([
-            'customer' => $validateData,
-            'token' => $customer->createToken('customerToken')->plainTextToken,
-            'message' => 'success'
+        $customer = Customer::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'city' => $request->city,
+            'township' => $request->township,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'customerType' => $request->customerType
         ]);
+
+        if ($customer) {
+            // Log the customer in and generate a token
+            auth('customers')->login($customer);
+            $token = $customer->createToken('customerToken')->plainTextToken;
+
+            return response()->json([
+                'customer' => $customer,
+                'token' => $token,
+                'message' => 'success'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'registration_failed'
+            ], 500);
+        }
     }
 
 
@@ -51,25 +75,22 @@ class CustomerAuthController extends Controller
     public function login(Request $request)
     {
         // $data = Customer::where('email', $request->email)->first();
-        $data = request()->validate([
-            'email' => ['required'],
-            'password' => ['required']
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-        $customer = Customer::where('email', $request->email)->first();
 
-        if (!$customer) {
-            return response()->json([
-                'error' => 'email_not_found',
-            ]);
-        }
+
+        $customer = Customer::where('email', $data['email'])->first();
+
 
         $checkPassword = Hash::check($request->password, $customer->password);
 
         if ($checkPassword) {
-            auth()->guard('customers')->login($customer);
+            auth('customers')->login($customer);
 
-            // $authenticatedCustomer = auth()->guard('customers')->user();
 
+            // $authenticatedcustomer = auth()->guard('customers')->user();
             $session_data = [
                 // 'id' => 1,
                 'email' => $customer->email,
@@ -88,6 +109,7 @@ class CustomerAuthController extends Controller
             return response()->json([
                 'customer' => $customer,
                 'token' => $customer->createToken('customerToken')->plainTextToken,
+                'request_email' => $request->email
                 // 'id' => $authenticatedCustomer->id,
             ]);
         } else {
@@ -106,8 +128,8 @@ class CustomerAuthController extends Controller
     {
         // $customer = Customer::where('id',)->first();
 
-
-        session()->forget('admin_session');
+        // auth('customers')->logout();
+        session()->forget('customer_session');
 
         return response()->json([
             'status' => 200,

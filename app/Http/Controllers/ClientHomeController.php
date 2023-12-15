@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\Customer;
 use App\Models\Preorder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -56,7 +57,7 @@ class ClientHomeController extends Controller
         // }
 
         // return $request->all();
-        Preorder::create([
+        Order::create([
             'customer_id' => 1,
             'customer_id' => 1,
             'products' => $request->input('products'),
