@@ -19,7 +19,6 @@ class SaleController extends Controller
     public function getPreorders()
     {
         $preorders = Preorder::orderBy('id', 'desc')->with('customer')->get();
-        return $preorders;
         if (!$preorders) {
             return response()->json([
                 'status' => 404,
@@ -54,14 +53,16 @@ class SaleController extends Controller
 
     public function confirmOrderAndSendMail($newSaleOrder,$preOrderId){
         $sale = Sale::where('preorder_id',$preOrderId)->first();
-        $warehouse_man = Staff::where("role_id",2)->where("department_id",4)->first();
-        $factory_man = Staff::where("role_id",2)->where("department_id",5)->first();
+        $managers = Staff::where("role_id",2)->get();
+
         if($sale->preorder['status'] === "confirmed"){
             $title = 'New Order Arrived!';
             $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
 
                     //warehouse manager email
-            Mail::to([$warehouse_man->email,$factory_man->email])->send(new ConfirmOrderMail($title, $body));
+            foreach($managers as $manager){
+                Mail::to($manager->email)->send(new ConfirmOrderMail($title, $body));
+            }
 
             return "Email sent successfully!";
         }

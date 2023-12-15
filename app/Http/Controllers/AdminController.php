@@ -13,19 +13,21 @@ class AdminController extends Controller
 
     public function getProductTotalCount(Request $request){
         $totalCount = 0;
-        $products = ManufacturedProduct::where('product_id',$request->product_id)->where('release_date',$request->targetYear)->get();
+        $products = ManufacturedProduct::where('product_id',$request->product_id)->get();
+        //target year
         foreach($products as $p){
             $totalCount += $p->total_quantity;
-        }
 
-        return response()->json($totalCount);
+        }
+        return response()->json(["products"=>$products,"totalCount"=>$totalCount]);
+
     }
 
     public function getDamageAndReturnCount($id){
         $totalDamageCount = 0;
         $totalReturnCount = 0;
         $getDamage = DamageReturnProduct::where('product_id',$id)->where('stage','damage')->get();
-        $getReturn = DamageReturnProduct::where('product_id',$id)->where('stage','sale return')->get();
+        $getReturn = DamageReturnProduct::where('product_id',$id)->where('stage','sale_return')->get();
 
         foreach($getDamage as $pD){
             $totalDamageCount += $pD->quantity;
@@ -40,12 +42,11 @@ class AdminController extends Controller
     }
 
     public function getProductPricesChanges(Request $request){
-        $requiredProduct = ManufacturedProduct::where('released_date',$request->year)->where('product_id',$request->product_id)->get();
-        $prices = [];
-        foreach($requiredProduct as $product){
-            array_push($prices,$product['product_price']);
-        }
-        return response()->json($prices);
+        $requiredProduct = ManufacturedProduct::where('product_id',$request->product_id)->get();
+        //where('released_date',$request->year)->
+
+
+        return response()->json($requiredProduct);
     }
 
     public function productsSellCount(){
