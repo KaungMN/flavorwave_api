@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\DamageReturnProduct;
 use App\Models\ManufacturedProduct;
-use App\Models\DamageReturnProduct;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;

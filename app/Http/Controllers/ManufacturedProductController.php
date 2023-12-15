@@ -121,8 +121,7 @@ class ManufacturedProductController extends Controller
             ->select('total_quantity','release_date')
             ->orderBy('created_at','asc')
             ->get();
-
-            foreach($validProducts as $product){
+foreach($validProducts as $product){
                 if($product->total_quantity > $preorderQuantity){
                    $updatedValidProductsQuantity = $product->total_quantity - $preorderQuantity;
                    $products = ManufacturedProduct::where('product_id',$request->productId)[0]->update(['total_quantity',$updatedValidProductsQuantity]);
