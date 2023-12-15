@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Preorder;
+use App\Models\Order;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,19 +28,19 @@ class ClientHomeController extends Controller
     }
 
 
-    // 
+    //
     public function createOrder(Request $request)
     {
-        // $customer_id = auth()->guard('customer')->id();
-        $validation = $this->validation($request);
-        if ($validation->fails()) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'not_found'
-            ]);
-        }
+        $customer_id = auth()->guard('customer')->id();
+        // $validation = $this->validation($request);
+        // if ($validation->fails()) {
+        //     return response()->json([
+        //         'status' => 404,
+        //         'message' => 'not_found'
+        //     ]);
+        // }
 
-        Preorder::create([
+        $preorder = Order::create([
             'customer_id' => $request->customer_id,
             'products' => $request->input('products'),
             'quantity' => $request->quantity,
@@ -49,7 +50,9 @@ class ClientHomeController extends Controller
             'orderType' => $request->orderType,
             'status' => $request->status,
             'remark' => $request->remark,
+            'sub_total'=>$request->totalPrice
         ]);
+
 
         return response()->json([
             'status' => 200,

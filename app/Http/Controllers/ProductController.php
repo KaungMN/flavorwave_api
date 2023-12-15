@@ -24,17 +24,20 @@ class ProductController extends Controller
 
 
                 // image upload
+            if($request->file('photo')) {
                 $image = $request->file('photo');
                 $image_name = uniqid() . ($image->getClientOriginalName());
                 $image->move(public_path('/img/product'), $image_name);
+                $request['photo'] = $image_name;
+            }
+
 
 
                 // $product = Product::create($validateData);
 
                 Product::create([
-                        'name' => $request->product,
+                         'name' => $request->name,
                         'price' => $request->price,
-                        'photo' => $image_name,
                         'description' => $request->description
                 ]);
 

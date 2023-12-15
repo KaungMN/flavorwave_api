@@ -5,13 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Preorder extends Model
+class Order extends Model
 {
     use HasFactory;
 
+
+    // 'customer_id' => $request->customer_id,
+    //         'products' => $request->input('products'),
+    //         'quantity' => $request->quantity,
+    //         'city' => $request->city,
+    //         'township' => $request->township,
+    //         'address' => $request->address,
+    //         'orderType' => $request->orderType,
+    //         'status' => $request->status,
+    //         'remark' => $request->remark,
+
     protected $fillable = [
         'customer_id',
-        'product_id',
         'quantity',
         'sub_total',
         'products',

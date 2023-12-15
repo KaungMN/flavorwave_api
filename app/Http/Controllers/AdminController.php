@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ManufacturedProduct;
 use App\Models\DamageReturnProduct;
-use App\Models\Preorder;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class AdminController extends Controller
     {
         $totalSellCount = 0;
 
-        $orderedProducts = Preorder::where('product_id', $id)->where('status', 'completed')->get();
+        $orderedProducts = Order::where('product_id', $id)->where('status', 'completed')->get();
         foreach ($orderedProducts as $p) {
             $totalSellCount += explode('_', $p->box_pcs)[0];
         }
