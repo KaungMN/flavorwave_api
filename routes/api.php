@@ -109,6 +109,7 @@ Route::get('/get-product-prices-change',[AdminController::class,'getProductPrice
 //setting
 Route::get('/get-departments-budgets', [SettingController::class, 'getDepartmentsBudgetsPerYear']);
 Route::post('/store-budgets', [SettingController::class, 'store']);
+Route::get('/product-profit-summary/{target_year?}', [SettingController::class, 'getProductProfitSummary']);
 
 
 //add to cart
