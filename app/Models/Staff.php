@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Sanctum\HasApiTokens;
 
-class Staff extends Authenticatable
+class Staff extends Model
 {
     use HasFactory;
     protected $table = "staffs";
     protected $fillable = [
+
         'role_id',
         'department_id',
         'name',
@@ -20,7 +19,6 @@ class Staff extends Authenticatable
         'phone',
         'summary',
         'entry_date',
-        'password',
         'salary',
         'deleted_at'
     ];
@@ -32,11 +30,11 @@ class Staff extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
 
     public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+{
+   $this->attributes['password'] = bcrypt($value);
+}
 }

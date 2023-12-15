@@ -17,13 +17,4 @@ class CustomerController extends Controller
         return response()->json($customer);
     }
 
-    public function getCus(){
-        $customers = Customer::orderBy("created_at","desc")->get();
-        return response()->json($customers,200);
-    }
-
-    public function showCus($id){
-        $customer = Customer::find($id);
-        return response()->json($customer);
-    }
 }
