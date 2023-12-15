@@ -77,7 +77,7 @@ Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
     // products
     Route::get('/orders', [SaleController::class, 'index']);
 
-});
+
     // Route::post('/create-product', [ProductController::class, 'index']);
 
 // Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
