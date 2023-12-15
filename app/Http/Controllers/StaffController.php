@@ -15,23 +15,10 @@ class StaffController extends Controller
         // $staffs = Staff::orderBy('id', 'desc')->with('role')->get();
         $staffs = Staff::get();
         return response()->json($staffs, 200);
-    public function getStaffs()
-    {
-        $staffs = Staff::get();
-
-        return response()->json($staffs, 200);
     }
 
-    public function storeStaffs(Request $request)
-    {
-        // $cleanData = $request->validate([
-        //     "role_id" => $request['role_id'],
-        //     "department_id" => $request['department_id'],
-        //     "name" => $request['name'],
-        //     "email" => $request['email'],
-        //     "salary" => $request['salary'],
-        //     "phone" => $request['phone']
-        // ]);
+
+
     public function storeStaffs(Request $request)
     {
         // $cleanData = $request->validate([
@@ -80,4 +67,4 @@ class StaffController extends Controller
         $staff->delete();
         return response()->json(null, 204);
     }
-    }
+}

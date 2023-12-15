@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\Product;
+
 use App\Models\Order;
 use App\Models\Sale;
 use Illuminate\Http\Request;
