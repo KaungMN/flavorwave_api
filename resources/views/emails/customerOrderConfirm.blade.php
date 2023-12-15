@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title>{{ $title }}</title>
+    <title>{{ $newTitle }}</title>
 </head>
 <body>
-    <p>{{ $body }}</p>
+    <p>{{ $newBody }}</p>
 </body>
 </html>

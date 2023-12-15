@@ -8,6 +8,7 @@ use App\Models\Sale;
 use App\Models\Staff;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -87,24 +88,30 @@ class SaleController extends Controller
             'status' => $request->status
         ]);
 
-        $title = 'New Order Arrived!';
-        $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
+        Log::info("customer_email");
+        Log::info($data['customer_email']);
 
-        $newTitle = 'Your order is confirmed!';
-        $newBody = 'Thanks for choosing us! Have a Nice day.';
+        // $newTitle = 'Your order is confirmed!';
+        // $newBody = 'Thanks for choosing us! Have a Nice day.';
 
+        // Mail::to($data['customer_email'])->send(new CustomerOrderConfirmMail($newTitle, $newBody));
+
+        $title = 'Order Confirmed!';
+        $body = 'Thanks for ordering from us! Your Order Id - '.$data['id'].'. We are processing to send our product to you.';
         //warehouse manager email
         $emails = [
             "serenenova1345@gmail.com",
             "kyawmhtet23@gmail.com",
             "kaungmyatnoe2016@gmail.com",
             'thiri7301@gmail.com',
-            'nitoe1999@gmail.com'
+            'nitoe1999@gmail.com',
+            $data['customer_email']
         ];
         Mail::to($emails)->send(new ConfirmOrderMail($title, $body));
 
 
-        Mail::to($data['customer_email'])->send(new CustomerOrderConfirmMail($newTitle, $newBody));
+
+
 
         if($data->status == 'confirm'){
 
