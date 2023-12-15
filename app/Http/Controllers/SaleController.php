@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ConfirmOrderMail;
+use App\Mail\CustomerOrderConfirmMail;
 use App\Models\Order;
 use App\Models\Sale;
 use App\Models\Staff;
@@ -75,8 +76,6 @@ class SaleController extends Controller
     {
         $data = Order::where('id', $request->id)->first();
 
-        $data = Order::where('id', $request->id)->first();
-
         if (!$data) {
             return response()->json([
                 'status' => 500,
@@ -88,24 +87,28 @@ class SaleController extends Controller
             'status' => $request->status
         ]);
 
-        // $title = 'New Order Arrived!';
-        // $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
+        $title = 'New Order Arrived!';
+        $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
 
-        // //warehouse manager email
-        // $emails = [
-        //     "awea60505@gmail.com",
-        //     "kyawmhtet23@gmail.com",
-        //     "kaungmyatnoe2016@gmail.com",
-        //     'thiri7301@gmail.com',
-        //     'nitoe1999@gmail.com'
-        // ];
-        // Mail::to($emails)->send(new ConfirmOrderMail($title, $body));
+        $newTitle = 'Your order is confirmed!';
+        $newBody = 'Thanks for choosing us! Have a Nice day.';
 
-        // return "Email sent successfully!";
+        //warehouse manager email
+        $emails = [
+            "serenenova1345@gmail.com",
+            "kyawmhtet23@gmail.com",
+            "kaungmyatnoe2016@gmail.com",
+            'thiri7301@gmail.com',
+            'nitoe1999@gmail.com'
+        ];
+        Mail::to($emails)->send(new ConfirmOrderMail($title, $body));
 
-        // if($data->status == 'confirm'){
 
-        // }
+        Mail::to($data['customer_email'])->send(new CustomerOrderConfirmMail($newTitle, $newBody));
+
+        if($data->status == 'confirm'){
+
+        }
 
 
 

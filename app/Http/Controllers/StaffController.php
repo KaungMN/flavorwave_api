@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Mail\StaffCreateMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
@@ -29,15 +30,18 @@ class StaffController extends Controller
         // ]);
 
         if (request()->file('photo')) {
-            $path = request()->file('photo')->store('/images');
-            $cleanData['photo'] = $path;
-            $cleanData['summary'] = $request['summary'];
-            $cleanData['entry_date'] = $request['entry_date'];
-            Staff::create($cleanData);
+            $image = $request->file('photo');
+            $image_name = uniqid() . ($image->getClientOriginalName());
+            $image->storeAs('public/images/product', $image_name);
+            $request['photo'] = $image_name;
+
         }
+        $request['password'] = Hash::make($request['password']);
+            $request['summary'] = $request['summary'];
+            $request['entry_date'] = $request['entry_date'];
+            Staff::create($request->all());
 
-
-        return response()->json($cleanData, 201);
+        return response()->json($request->all(), 201);
     }
 
 

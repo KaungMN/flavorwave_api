@@ -106,6 +106,8 @@ class CustomerAuthController extends Controller
 
             Log::info($customerSession);
 
+            $this->sendWelcomeEmail($request->email);
+
             return response()->json([
                 'customer' => $customer,
                 'token' => $customer->createToken('customerToken')->plainTextToken,

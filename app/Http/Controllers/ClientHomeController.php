@@ -49,7 +49,9 @@ class ClientHomeController extends Controller
         // return $request->all();
         // $customer_id = auth()->guard('customers')->id();
         Order::create([
-            'customer_id' => 1,
+            'customer_id' => $request->customer_id,
+            'customer_name' => $request->customer_name,
+            'customer_email' => $request->customer_email,
             'products' => $request->input('products'),
             'quantity' => $request->quantity,
             'city' => $request->city,

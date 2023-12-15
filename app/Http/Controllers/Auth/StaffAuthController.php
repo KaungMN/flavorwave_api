@@ -42,6 +42,7 @@ class StaffAuthController extends Controller
             return response()->json([
                 'staff' => $staff,
                 'token' => $token,
+                'department_id' => $request->department_id,
                 'message' => 'success'
             ]);
         } else {
@@ -57,10 +58,8 @@ class StaffAuthController extends Controller
             'password' => 'required',
         ]);
         $staff = Staff::where('email', $data['email'])->first();
-        $staff = Staff::where('password', $data['pass'])->first();
-        // $checkPassword = Hash::check($request->password, $staff->password);
-
-        // if ($checkPassword) {
+        $checkPassword = Hash::check($request->password, $staff->password);
+        if ($checkPassword) {
             auth()->guard('staffs')->login($staff);
             // $authenticatedstaff = auth()->guard('staffs')->user();
             $session_data = [
@@ -74,24 +73,32 @@ class StaffAuthController extends Controller
             Log::info($staffSession);
             return response()->json([
                 'staff' => $staff,
-                // 'token' => $staff->createToken('customerToken')->plainTextToken,
-                'request_email' => $request->email
+                'token' => $staff->createToken('customerToken')->plainTextToken,
+                'request_email' => $request->email,
+                // 'department_id' => $request->department_id
                 // 'id' => $authenticatedCustomer->id,
             ]);
-        // } else {
-        //     return response()->json([
-        //         'customer' => null,
-        //         'token' => null,
-        //     ]);
-        // }
+        } else {
+            return response()->json([
+                'customer' => null,
+                'token' => null,
+            ]);
+        }
     }
     // logout
     public function logout()
     {
         session()->forget('staff_session');
+                    auth('staffs')->logout($staff);
+
         return response()->json([
             'status' => 200,
             'message' => 'Logout successful'
         ]);
     }
 }
+
+
+
+
+

@@ -56,6 +56,7 @@ Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
     Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');
     Route::get('/get-preorders', [SaleController::class, 'getPreorders']);
     // get staff
+
 });
 
 
@@ -111,7 +112,7 @@ Route::post('/store-budgets', [SettingController::class, 'store']);
 
 
 //add to cart
-Route::get('/add-to-cart',[CartController::class,'addToCart']);
+// Route::get('/add-to-cart',[CartController::class,'addToCart']);
 
 //get damage products
 Route::get('/damage-return-products', [DamageReturnProductController::class, 'index']);

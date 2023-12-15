@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('township');
             $table->string('address');
             $table->string('orderType');
+            $table->string('customer_name');
+            $table->string('customer_email');
             $table->string('status')->nullable();
             $table->longText('remark')->nullable();
             $table->float('sub_total')->nullable();
