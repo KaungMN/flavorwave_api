@@ -6,7 +6,10 @@ use App\Models\Order;
 use App\Models\Sale;
 use App\Models\Staff;
 use Carbon\Carbon;
+use App\Models\Staff;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Mail\ConfirmOrderMail;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -57,16 +60,24 @@ class SaleController extends Controller
             $title = 'New Order Arrived!';
             $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
 
-                    //warehouse manager email
-            Mail::to([$warehouse_man->email,$factory_man->email])->send(new ConfirmOrderMail($title, $body));
+            //warehouse manager email
+            $emails = [
+                "awea60505@gmail.com",
+                "kyawmhtet23@gmail.com",
+                "kaungmyatnoe2016@gmail.com",
+                'thiri7301@gmail.com',
+                'nitoe1999@gmail.com'
+            ];
+            Mail::to($emails)->send(new ConfirmOrderMail($title, $body));
 
             return "Email sent successfully!";
         }
-
     }
     // change status
     public function changeStatus(Request $request)
     {
+        $data = Order::where('id', $request->id)->first();
+
         $data = Order::where('id', $request->id)->first();
 
         if (!$data) {
@@ -79,6 +90,21 @@ class SaleController extends Controller
         $data->update([
             'status' => $request->status
         ]);
+
+        $title = 'New Order Arrived!';
+        $body = 'One new preorder is confirmed.Please make sure to check out preorder list and update your list sheet. Thank you!';
+
+        //warehouse manager email
+        $emails = [
+            "awea60505@gmail.com",
+            "kyawmhtet23@gmail.com",
+            "kaungmyatnoe2016@gmail.com",
+            'thiri7301@gmail.com',
+            'nitoe1999@gmail.com'
+        ];
+        Mail::to($emails)->send(new ConfirmOrderMail($title, $body));
+
+        return "Email sent successfully!";
 
         // if($data->status == 'confirm'){
 

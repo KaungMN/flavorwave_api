@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Order;
@@ -58,7 +60,7 @@ class ClientHomeController extends Controller
             'orderType' => $request->orderType,
             'status' => $request->status,
             'remark' => $request->remark,
-            'sub_total'=>$request->totalPrice
+            'sub_total' => $request->totalPrice
         ]);
 
 

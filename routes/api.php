@@ -55,14 +55,13 @@ Route::get('/orders', [SaleController::class, 'index']);
 
 // Route::post('/create-product', [ProductController::class, 'index']);
 
-Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
+// Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
 
-Route::get('/get-budgets',[SettingController::class,'getDepartmentsBudgetsPerYear']);
+Route::get('/get-budgets', [SettingController::class, 'getDepartmentsBudgetsPerYear']);
 
 //preorder(sale)
-Route::get('/get-preorders',[SaleController::class,'getPreorders']);
-Route::post('/post-preorder/{preOrderId}',[SaleController::class,'storePreorder']);
-Route::post('/change-status',[SaleController::class,'changeStatus']);
+Route::post('/post-preorder/{preOrderId}', [SaleController::class, 'storePreorder']);
+Route::post('/change-status', [SaleController::class, 'changeStatus']);
 
 
 //factory
@@ -73,7 +72,7 @@ Route::get('/get-products/{id}',[ProductController::class,'show']);
 Route::delete('/delete-product/{id}',[ProductController::class,'destroy']);
 
 //sale confirm and update maufactured product list
-Route::post('/order-confirm',[ManufacturedProductController::class,'checkValidAndConfirmPreorder']);
+Route::post('/order-confirm', [ManufacturedProductController::class, 'checkValidAndConfirmPreorder']);
 
 //check stock
 Route::get('/check-stock',[ManufacturedProductController::class,'index']);
@@ -86,16 +85,16 @@ Route::get('/get-product-prices-change',[AdminController::class,'getProductPrice
 
 
 //setting
-Route::get('/get-departments-budgets',[SettingController::class,'getDepartmentsBudgetsPerYear']);
-Route::post('/store-budgets',[SettingController::class,'store']);
+Route::get('/get-departments-budgets', [SettingController::class, 'getDepartmentsBudgetsPerYear']);
+Route::post('/store-budgets', [SettingController::class, 'store']);
 
 
 //add to cart
 Route::get('/add-to-cart',[CartController::class,'addToCart']);
 
 //get damage products
-Route::get('/damage-return-products',[DamageReturnProductController::class,'index']);
-Route::post('/damage-return-products',[DamageReturnProductController::class,'store']);
+Route::get('/damage-return-products', [DamageReturnProductController::class, 'index']);
+Route::post('/damage-return-products', [DamageReturnProductController::class, 'store']);
 
 
 //delivery
@@ -132,11 +131,11 @@ Route::patch('/update-staff/{id}',[StaffController::class,'updateStaff']);
 Route::delete('/delete-staff/{id}',[StaffController::class,'deleteStaff']);
 
 //truck
-Route::get('/get-trucks',[TruckController::class,'getTrucks']);
-Route::post('/store-truck',[TruckController::class,'store']);
-Route::get('/show-truck',[TruckController::class,'show']);
-Route::patch('/update-truck/{id}',[TruckController::class,'update']);
-Route::delete('/delete-truck/{id}',[TruckController::class,'destroy']);
+Route::get('/get-trucks', [TruckController::class, 'getTrucks']);
+Route::post('/store-truck', [TruckController::class, 'store']);
+Route::get('/show-truck', [TruckController::class, 'show']);
+Route::patch('/update-truck/{id}', [TruckController::class, 'update']);
+Route::delete('/delete-truck/{id}', [TruckController::class, 'destroy']);
 
 //warehouse
 Route::get('/get-warehouses',[WarehouseController::class,'index']);

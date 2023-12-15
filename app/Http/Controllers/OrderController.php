@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index(){
-        return Order::filter(request(['status','customer','product']))->get();
+    public function index()
+    {
+        return Order::filter(request(['status', 'customer', 'product']))->get();
     }
 
     public function getOrders()
@@ -72,5 +74,4 @@ class OrderController extends Controller
 
         return response()->json('Preorder deleted successfully', 200);
     }
-
 }
