@@ -58,6 +58,7 @@ Route::get('/orders', [SaleController::class, 'index']);
 // Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
 
 Route::get('/get-budgets', [SettingController::class, 'getDepartmentsBudgetsPerYear']);
+Route::get('/product-profit-summary/{target_year?}', [SettingController::class, 'getProductProfitSummary']);
 
 //preorder(sale)
 Route::post('/post-preorder/{preOrderId}', [SaleController::class, 'storePreorder']);
