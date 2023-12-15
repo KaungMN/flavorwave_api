@@ -66,6 +66,7 @@ class StaffAuthController extends Controller
 
     public function login(Request $request)
     {
+        // $data = Customer::where('email', $request->email)->first();
         $data = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -74,10 +75,12 @@ class StaffAuthController extends Controller
 
         $staff = Staff::where('email', $data['email'])->first();
 
+
         $checkPassword = Hash::check($request->password, $staff->password);
 
         if ($checkPassword) {
-            auth()->guard('staffs')->login($staff);
+            auth('staffs')->login($staff);
+
 
             // $authenticatedstaff = auth()->guard('staffs')->user();
             $session_data = [
@@ -97,16 +100,19 @@ class StaffAuthController extends Controller
 
             return response()->json([
                 'staff' => $staff,
-                'token' => $staff->createToken('customerToken')->plainTextToken,
+                'token' => $staff->createToken('staffToken')->plainTextToken,
                 'request_email' => $request->email
                 // 'id' => $authenticatedCustomer->id,
             ]);
         } else {
             return response()->json([
-                'customer' => null,
+                'staff' => null,
                 'token' => null,
             ]);
         }
+
+        // auth()->guard('customer')->login($checkEmail);
+
     }
 
 
