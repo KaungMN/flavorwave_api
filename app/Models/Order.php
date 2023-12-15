@@ -44,6 +44,28 @@ class Order extends Model
     //many to many
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Product::class);
+    }
+
+    public function scopeFilter($query, $filters)
+    {
+        if ($filters['status'] ?? null) {
+
+            $query
+                ->where(function ($query) use ($filters) {
+                    $query->where('status', 'LIKE', '%' . $filters['status'] . '%');
+                });
+        }
+        if ($filters['customer'] ?? null) {
+            $query->whereHas('customer', function ($query) use ($filters) {
+                $query->where('name', $filters['customer']);
+            });
+        }
+
+        if ($filters['product'] ?? null) {
+            $query->whereHas('product', function ($query) use ($filters) {
+                $query->where('name', $filters['product']);
+            });
+        }
     }
 }

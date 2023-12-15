@@ -45,27 +45,34 @@ use App\Http\Controllers\SettingController;
 
 Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
 Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
-Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
 
 
 // staff_auth
 Route::post('/staff-register', [StaffAuthController::class, 'register'])->name('staffRegister');
 Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
-Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogin');
 
 Route::get('/product', [ClientHomeController::class, 'index']);
 
 // customer_auth
 Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
+    Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
 });
 
 
+
+// staff middleware
 Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
 
-    // get staff
+    Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogout');
+
     Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');
 
+    Route::get('/get-preorders', [SaleController::class, 'getPreorders']);
+
+
+    // get staff
+});
 
     // products
     Route::get('/orders', [SaleController::class, 'index']);
@@ -73,14 +80,13 @@ Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
 });
     // Route::post('/create-product', [ProductController::class, 'index']);
 
-Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
+// Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
 
-Route::get('/get-budgets',[SettingController::class,'getDepartmentsBudgetsPerYear']);
+Route::get('/get-budgets', [SettingController::class, 'getDepartmentsBudgetsPerYear']);
 
 //preorder(sale)
-Route::get('/get-preorders',[SaleController::class,'getPreorders']);
-Route::post('/post-preorder/{preOrderId}',[SaleController::class,'storePreorder']);
-Route::post('/change-status',[SaleController::class,'changeStatus']);
+Route::post('/post-preorder/{preOrderId}', [SaleController::class, 'storePreorder']);
+Route::post('/change-status', [SaleController::class, 'changeStatus']);
 
 
 //factory
@@ -91,10 +97,10 @@ Route::get('/get-products/{id}',[ManufacturedProductController::class,'show']);
 Route::delete('/delete-product/{id}',[ManufacturedProductController::class,'destroy']);
 
 //sale confirm and update maufactured product list
-Route::post('/order-confirm',[ManufacturedProductController::class,'checkValidAndConfirmPreorder']);
+Route::post('/order-confirm', [ManufacturedProductController::class, 'checkValidAndConfirmPreorder']);
 
 //check stock
-Route::get('/check-stock',[ManufacturedProductController::class,'checkStock']);
+Route::get('/check-stock', [ManufacturedProductController::class, 'checkStock']);
 
 //admin product
 // Route::get('/get-sell-count',[AdminController::class,'getProductSellCount']);
@@ -107,27 +113,28 @@ Route::post('/get-product',[ProductController::class,'getProduct']);
 
 
 //setting
-Route::get('/get-departments-budgets',[SettingController::class,'getDepartmentsBudgetsPerYear']);
-Route::post('/store-budgets',[SettingController::class,'store']);
+Route::get('/get-departments-budgets', [SettingController::class, 'getDepartmentsBudgetsPerYear']);
+Route::post('/store-budgets', [SettingController::class, 'store']);
 
 
 
 //get damage products
-Route::get('/damage-return-products',[DamageReturnProductController::class,'index']);
-Route::post('/damage-return-products',[DamageReturnProductController::class,'store']);
+Route::get('/damage-return-products', [DamageReturnProductController::class, 'index']);
+Route::post('/damage-return-products', [DamageReturnProductController::class, 'store']);
 
 
 //delivery
-Route::get('/get-delivery',[DeliveryController::class,'index']);
-Route::post('/post-delivery',[DeliveryController::class,'store']);
-Route::get('/order-success',[DeliveryController::class,'orderSuccess']);Route::post('/change-deli-status',[DeliveryController::class,'changeStatus']);
+Route::get('/get-delivery', [DeliveryController::class, 'index']);
+Route::post('/post-delivery', [DeliveryController::class, 'store']);
+Route::get('/order-success', [DeliveryController::class, 'orderSuccess']);
+Route::post('/change-deli-status', [DeliveryController::class, 'changeStatus']);
 
 //pre-order
-Route::get('/getpreorders',[SaleController::class,'getPreorders']);
-Route::post('/store-preorders',[OrderController::class,'store']);
-Route::get('/show-preorder',[OrderController::class,'show']);
-Route::patch('/update-preorder/{id}',[OrderController::class,'update']);
-Route::delete('/delete-preorder/{id}',[OrderController::class,'destroy']);
+Route::get('/getpreorders', [SaleController::class, 'getPreorders']);
+Route::post('/store-preorders', [OrderController::class, 'store']);
+Route::get('/show-preorder', [OrderController::class, 'show']);
+Route::patch('/update-preorder/{id}', [OrderController::class, 'update']);
+Route::delete('/delete-preorder/{id}', [OrderController::class, 'destroy']);
 
 //product
 Route::get('/get-products',[ProductController::class,'index']);
@@ -138,11 +145,11 @@ Route::get('/get-product/{name}',[ProductController::class,'show']);
 
 
 //raw materials
-Route::get('/get-raw-materials',[OrderController::class,'getPreorders']);
-Route::post('/store-raw-materials',[OrderController::class,'store']);
-Route::get('/show-preorder',[OrderController::class,'showRaw']);
-Route::patch('/update-preorder/{id}',[OrderController::class,'updateRaw']);
-Route::delete('/delete-preorder/{id}',[OrderController::class,'destroy']);
+Route::get('/get-raw-materials', [OrderController::class, 'getPreorders']);
+Route::post('/store-raw-materials', [OrderController::class, 'store']);
+Route::get('/show-preorder', [OrderController::class, 'showRaw']);
+Route::patch('/update-preorder/{id}', [OrderController::class, 'updateRaw']);
+Route::delete('/delete-preorder/{id}', [OrderController::class, 'destroy']);
 
 //staff
 Route::get('/get-staffs',[StaffController::class,'getStaffs']);
@@ -152,11 +159,11 @@ Route::put('/update-staff/{id}',[StaffController::class,'updateStaff']);
 Route::delete('/delete-staff/{id}',[StaffController::class,'deleteStaff']);
 
 //truck
-Route::get('/get-trucks',[TruckController::class,'getTrucks']);
-Route::post('/store-truck',[TruckController::class,'store']);
-Route::get('/show-truck',[TruckController::class,'show']);
-Route::patch('/update-truck/{id}',[TruckController::class,'update']);
-Route::delete('/delete-truck/{id}',[TruckController::class,'destroy']);
+Route::get('/get-trucks', [TruckController::class, 'getTrucks']);
+Route::post('/store-truck', [TruckController::class, 'store']);
+Route::get('/show-truck', [TruckController::class, 'show']);
+Route::patch('/update-truck/{id}', [TruckController::class, 'update']);
+Route::delete('/delete-truck/{id}', [TruckController::class, 'destroy']);
 
 //warehouse
 Route::get('/get-warehouses',[OrderController::class,'index']);
@@ -170,7 +177,3 @@ Route::get('/get-role/{id}',[RoleController::class,'getRole']);
 
 //department
 Route::get('/get-department/{id}',[DepartmentController::class,'getDepartment']);
-
-
-
-

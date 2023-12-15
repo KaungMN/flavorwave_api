@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use App\Mail\StaffCreateMail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class StaffController extends Controller
 {
@@ -40,13 +43,16 @@ class StaffController extends Controller
         //     "phone" => $request['phone']
         // ]);
 
-       if(request()->file('photo')){
-        $path = request()->file('photo')->store('/images');
-        $request['photo'] = $path;
-       }
+        if (request()->file('photo')) {
+            $path = request()->file('photo')->store('/images');
+            $cleanData['photo'] = $path;
+            $cleanData['summary'] = $request['summary'];
+            $cleanData['entry_date'] = $request['entry_date'];
+            Staff::create($cleanData);
+        }
 
-        $staff = Staff::create($request->all());
-        return response()->json($staff, 201);
+
+        return response()->json($cleanData, 201);
     }
 
 
@@ -58,11 +64,12 @@ class StaffController extends Controller
         return response()->json($updatedStaff, 200);
     }
 
-    public function showStaff($id){
-        $staff = Staff::where("id",$id)->first();
-        if(!$staff){
+    public function showStaff($id)
+    {
+        $staff = Staff::where("id", $id)->first();
+        if (!$staff) {
             return response()->json([
-                "message"=>"Not Found"
+                "message" => "Not Found"
             ]);
         }
         return response()->json($staff);
