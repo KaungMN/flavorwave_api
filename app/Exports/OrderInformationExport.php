@@ -22,7 +22,7 @@ class OrderInformationExport implements FromQuery, WithHeadings, WithStyles
     {
         return DB::table('orders')
             ->join('customers', 'customers.id', '=', 'orders.customer_id')
-            ->leftjoin('deliveries', 'deliveries.order_id', '=', 'orders.id')
+            ->leftjoin('deliveries', 'deliveries.preorder_id', '=', 'orders.id')
             ->leftjoin('trucks', 'trucks.id', '=', 'deliveries.truck_id')
             ->leftjoin('staffs', 'staffs.id', '=', 'trucks.staff_id')
             ->select('customers.name as customer_name', 'customers.customerType', 'orders.city', 'orders.township',
