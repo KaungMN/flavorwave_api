@@ -9,7 +9,7 @@ class Setting extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'department_id',
+    'department_id',
         'target_year',
         'total_budget',
         'report_budget',

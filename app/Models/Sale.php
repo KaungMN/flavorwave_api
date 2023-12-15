@@ -25,4 +25,25 @@ class Sale extends Model
     {
         return $this->belongsTo(Warehouse::class);
     }
+
+    public function staff(){
+        return $this->belongsTo(Staff::class);
+    }
+
+    // public function scopeFilter($query,$filters){
+
+    //     if($filters['staff'] ?? null){
+    //         $query->whereHas('staff',function($query) use ($filters) {
+    //             $query->where('name',$filters['staff']);
+    //         });
+    //     }
+
+    //     if($filters['product'] ?? null){
+    //         $query->whereHas('product',function($query) use ($filters) {
+    //             $query->where('name',$filters['product']);
+    //         });
+    //     }
+
+
+    // }
 }

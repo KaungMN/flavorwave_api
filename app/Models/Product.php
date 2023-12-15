@@ -18,14 +18,16 @@ class Product extends Model
         'photo',
         'price',
         'description',
+        'price',
+        'description',
     ];
 
-    protected $appends = ['image_url'];
+    // protected $appends = ['image_url'];
 
-    public function getImageUrlAttribute()
-    {
-        return asset('/img/product' . $this->photo);
-    }
+    // public function getImageUrlAttribute()
+    // {
+    //     return asset('/img/product/' . $this->photo);
+    // }
 
     public function preorder()
     {
@@ -47,11 +49,7 @@ class Product extends Model
     }
 
 
-    // with cart
-    public function cart()
-    {
-        return $this->hasMany(Cart::class);
-    }
+
 
     // with raw
     public function raw()

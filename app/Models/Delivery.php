@@ -23,7 +23,7 @@ class Delivery extends Model
     }
 
 
-    public function preorder()
+    public function preorders()
     {
 
         return $this->hasMany(Preorder::class);

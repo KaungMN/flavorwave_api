@@ -1,5 +1,9 @@
 <?php
 
+
+namespace App\Http\Controllers;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -37,23 +41,37 @@ use App\Http\Controllers\SettingController;
 // });
 
 
+// customer_auth
 
+Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
+Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
+Route::post('/client-logout', [CustomerAuthController::class, 'logout'])->name('customerLogout');
+
+
+// staff_auth
+Route::post('/staff-register', [StaffAuthController::class, 'register'])->name('staffRegister');
+Route::post('/staff-login', [StaffAuthController::class, 'login'])->name('staffLogin');
+Route::post('/staff-logout', [StaffAuthController::class, 'logout'])->name('staffLogin');
+
+Route::get('/product', [ClientHomeController::class, 'index']);
 
 // customer_auth
-// register
-Route::post('/client-register', [CustomerAuthController::class, 'register'])->name('customerRegister');
-
-// login
-Route::post('/client-login', [CustomerAuthController::class, 'login'])->name('customerLogin');
-Route::get('/get-customers',[CustomerController::class,'getCus']);
-Route::get('/get-customer/{id}',[CustomerController::class,'showCus']);
-
-// products
-Route::get('/product', [ClientHomeController::class, 'index'])->name('products');
-Route::get('/orders', [SaleController::class, 'index']);
+Route::group(['middleware' => 'CustomerAuth'], function () {
+    Route::post('/createorders', [ClientHomeController::class, 'createOrder']);
+});
 
 
-// Route::post('/create-product', [ProductController::class, 'index']);
+Route::group(['middleware' => 'CheckStaffAuthentication'], function () {
+
+    // get staff
+    Route::get('/staffs', [StaffController::class, 'getStaffs'])->name('staffs');
+
+
+    // products
+    Route::get('/orders', [SaleController::class, 'index']);
+
+});
+    // Route::post('/create-product', [ProductController::class, 'index']);
 
 Route::post('/create-orders', [ClientHomeController::class, 'createOrder']);
 
@@ -76,13 +94,16 @@ Route::delete('/delete-product/{id}',[ManufacturedProductController::class,'dest
 Route::post('/order-confirm',[ManufacturedProductController::class,'checkValidAndConfirmPreorder']);
 
 //check stock
-Route::get('/check-stock',[ManufacturedProductController::class,'index']);
+Route::get('/check-stock',[ManufacturedProductController::class,'checkStock']);
 
 //admin product
-Route::get('/get-sell-count',[AdminController::class,'getProductSellCount']);
-Route::get('/get-total-count',[AdminController::class,'getProductTotalCount']);
-Route::get('/get-damage-return-count',[AdminController::class,'getDamageAndReturnCount']);
-Route::get('/get-product-prices-change',[AdminController::class,'getProductPricesChanges']);
+// Route::get('/get-sell-count',[AdminController::class,'getProductSellCount']);
+Route::post('/get-total-count/{product_id}/{targetYear}',[AdminController::class,'getProductTotalCount']);
+Route::post('/get-damage-return-count',[AdminController::class,'getDamageAndReturnCount']);
+Route::post('/get-product-prices-change/{product_id}',[AdminController::class,'getProductPricesChanges']);
+
+//get product
+Route::post('/get-product',[ProductController::class,'getProduct']);
 
 
 //setting
@@ -90,8 +111,6 @@ Route::get('/get-departments-budgets',[SettingController::class,'getDepartmentsB
 Route::post('/store-budgets',[SettingController::class,'store']);
 
 
-//add to cart
-Route::get('/add-to-cart',[CartController::class,'addToCart']);
 
 //get damage products
 Route::get('/damage-return-products',[DamageReturnProductController::class,'index']);
@@ -105,31 +124,31 @@ Route::get('/order-success',[DeliveryController::class,'orderSuccess']);Route::p
 
 //pre-order
 Route::get('/getpreorders',[SaleController::class,'getPreorders']);
-Route::post('/store-preorders',[PreorderController::class,'store']);
-Route::get('/show-preorder',[PreorderController::class,'show']);
-Route::patch('/update-preorder/{id}',[PreorderController::class,'update']);
-Route::delete('/delete-preorder/{id}',[PreorderController::class,'destroy']);
+Route::post('/store-preorders',[OrderController::class,'store']);
+Route::get('/show-preorder',[OrderController::class,'show']);
+Route::patch('/update-preorder/{id}',[OrderController::class,'update']);
+Route::delete('/delete-preorder/{id}',[OrderController::class,'destroy']);
 
 //product
 Route::get('/get-products',[ProductController::class,'index']);
 Route::post('/post-products',[ProductController::class,'store']);
-// Route::get('/get-product/{id}',[ProductController::class,'show']);
+Route::get('/get-product/{name}',[ProductController::class,'show']);
 // Route::patch('/update-product/{id}',[ProductController::class,'update']);
 // Route::delete('/delete-product/{id}',[ProductController::class,'destroy']);
 
 
 //raw materials
-Route::get('/get-raw-materials',[PreorderController::class,'getPreorders']);
-Route::post('/store-raw-materials',[PreorderController::class,'store']);
-Route::get('/show-preorder',[PreorderController::class,'showRaw']);
-Route::patch('/update-preorder/{id}',[PreorderController::class,'updateRaw']);
-Route::delete('/delete-preorder/{id}',[PreorderController::class,'destroy']);
+Route::get('/get-raw-materials',[OrderController::class,'getPreorders']);
+Route::post('/store-raw-materials',[OrderController::class,'store']);
+Route::get('/show-preorder',[OrderController::class,'showRaw']);
+Route::patch('/update-preorder/{id}',[OrderController::class,'updateRaw']);
+Route::delete('/delete-preorder/{id}',[OrderController::class,'destroy']);
 
 //staff
 Route::get('/get-staffs',[StaffController::class,'getStaffs']);
 Route::post('/store-staffs',[StaffController::class,'storeStaffs']);
 Route::get('/show-staff',[StaffController::class,'showStaff']);
-Route::patch('/update-staff/{id}',[StaffController::class,'updateStaff']);
+Route::put('/update-staff/{id}',[StaffController::class,'updateStaff']);
 Route::delete('/delete-staff/{id}',[StaffController::class,'deleteStaff']);
 
 //truck
@@ -140,8 +159,18 @@ Route::patch('/update-truck/{id}',[TruckController::class,'update']);
 Route::delete('/delete-truck/{id}',[TruckController::class,'destroy']);
 
 //warehouse
-Route::get('/get-warehouses',[WarehouseController::class,'index']);
-Route::post('/store-warehouse',[PreorderController::class,'store']);
-Route::get('/show-truck',[PreorderController::class,'show']);
-Route::patch('/update-warehouse/{id}',[PreorderController::class,'edit']);
-Route::delete('/delete-warehouse/{id}',[PreorderController::class,'destroy']);
+Route::get('/get-warehouses',[OrderController::class,'index']);
+Route::post('/store-warehouse',[OrderController::class,'store']);
+Route::get('/show-truck',[OrderController::class,'show']);
+Route::patch('/update-warehouse/{id}',[OrderController::class,'edit']);
+Route::delete('/delete-warehouse/{id}',[OrderController::class,'destroy']);
+
+//role
+Route::get('/get-role/{id}',[RoleController::class,'getRole']);
+
+//department
+Route::get('/get-department/{id}',[DepartmentController::class,'getDepartment']);
+
+
+
+

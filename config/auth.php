@@ -44,12 +44,19 @@ return [
             'provider' => 'users',
         ],
 
-        'customer' => [
-            'driver' => 'session',
-            'provider' => 'customers',
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+
         ],
 
-        'staff' => [
+        'customers' => [
+            'driver' => 'session',
+            'provider' => 'customers',
+
+        ],
+
+        'staffs' => [
             'driver' => 'session',
             'provider' => 'staffs',
         ],

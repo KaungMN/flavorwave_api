@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ClientHomeController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware('CustomerAuth');
+    // }
     // home page
     public function index()
     {
-        $products = Product::orderBy('id', 'desc')->with('raw')->get();
-        // $preorders = Preorder::orderBy('id', 'desc')->get();
+        $products = Product::orderBy('id', 'desc')->get();
 
-        return $products;
+        // $pw = Hash::make('123456');
+        // return $pw;
         if (!$products) {
             return response()->json([
                 'status' => 404,
@@ -28,6 +35,7 @@ class ClientHomeController extends Controller
     }
 
 
+    //
     //
     public function createOrder(Request $request)
     {
@@ -55,9 +63,9 @@ class ClientHomeController extends Controller
 
 
         return response()->json([
-            'status' => 200,
+
             'message' => 'success'
-        ]);
+        ], 200);
     }
 
 
