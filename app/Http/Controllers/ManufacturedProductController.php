@@ -13,7 +13,7 @@ class ManufacturedProductController extends Controller
 {
     public function index()
     {
-        $manufact_products = ManufacturedProduct::orderBy('id', 'desc')->with('product', 'raw')->get();
+        $manufact_products = ManufacturedProduct::orderBy('id', 'desc')->get();
 
         if (!$manufact_products) {
             return response()->json([

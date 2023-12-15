@@ -6,19 +6,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SaleController;
-use App\Http\Controllers\ClientHomeController;
-use App\Http\Controllers\Auth\StaffAuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TruckController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\StaffController;
+
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\CustomerAuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ClientHomeController;
 use App\Http\Controllers\DamageReturnProductController;
 use App\Http\Controllers\DeliveryController;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ManufacturedProductController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PreorderController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\StaffController;
-use App\Http\Controllers\TruckController;
+
 
 /*
 |--------------------------------------------------------------------------

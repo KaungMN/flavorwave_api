@@ -4,12 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\DamageReturnProduct;
 use App\Models\ManufacturedProduct;
-use App\Models\Preorder;
+use App\Models\DamageReturnProduct;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    //
+    public function getProductSellCount($id)
+    {
+        $totalSellCount = 0;
+
+        $orderedProducts = Order::where('product_id', $id)->where('status', 'completed')->get();
+        foreach ($orderedProducts as $p) {
+            $totalSellCount += explode('_', $p->box_pcs)[0];
+        }
+
+        return response()->json($totalSellCount);
+    }
 
     public function getProductTotalCount(Request $request){
         $totalCount = 0;
