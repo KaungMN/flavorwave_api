@@ -102,7 +102,7 @@ Route::post('/damage-return-products', [DamageReturnProductController::class, 's
 Route::get('/get-delivery',[DeliveryController::class,'index']);
 Route::post('/post-delivery',[DeliveryController::class,'store']);
 Route::get('/order-success',[DeliveryController::class,'orderSuccess']);Route::post('/change-deli-status',[DeliveryController::class,'changeStatus']);
-Route::get('/export', [DeliveryController::class, 'export']);
+
 //pre-order
 Route::get('/getpreorders',[SaleController::class,'getPreorders']);
 Route::post('/store-preorders',[PreorderController::class,'store']);

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DeliveryController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/export', [DeliveryController::class, 'export']);
 
 // Route::get('/products', [ProductController::class, 'index'])->name('products');
